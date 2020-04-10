@@ -1,0 +1,632 @@
+LPI Linux Essentials Certification:-
+
+Linux Distor - 
+
+ubuntu : 
+Which version runing :- lsb_release -a 
+Kernal verison : uname -r
+GNU core utility version :- ls -version 
+GUN is utility to run the command in aprroperiate manner.
+X Server :- used for GUI (check the version of X server X --version)
+Note: for beginer Ubuntu is greate choice for learner.
+
+#Linux-Embedded Systems
+
+What is embaded system : is a combination if H.W and Sot.
+Application uses the library to funtion.
+*Androide & Respberry Pi - this is use case of Linux
+
+#Server Applications
+
+Apache is web server HTTP server, free open web server.
+*Nginx is alos open source web server:- reverse proxy, load balancer, mail proxy, HTTP caching.
+DB: MySQL, fork of MYSQL is MariaDB
+File sharing : Samba or also client to connect to windows file sahre, NFS 
+private cloude : 
+OwnCloud : like DropBox and alternative of this nextcloud fork by OwnCloud.
+
+#Development Languages: Perl, C, java, Python and many more.
+
+#Package Management Tools and Repositories:
+
+Package: is collection of file needed to install vis cource code and binary compiled on local host.
+dpkg - debiam package. used as apt-get (apt - advance package tool)
+rpm - redhat packate manager. used as yum 
+package manager having meta data and dependency to compile the binary on local host.
+Repository : is registry of package or software 
+yum - yello dog updater modified
+
+#Desktop Skills: 
+
+every users having home dir which can be seen /home/
+
+#Getting to the Command Line
+
+Bash LCI Basic: 
+
+User@IP~$ ("~" Tilda also called home directory os user) and "$" unprevillaged sigh for user or standard user
+
+user@IP~]# (# is called pound sing for privillaged or root user
+
+#Command Line Syntax:-
+
+ls -a(all) -l (long lisitng) -h (human readable) -s (size) 
+We can run these all in one command if at all needed e.g. ls -alsh and for shot form ls -als "ll"
+
+#Variable:-
+ 
+test="this is variable" and to see use "echo" $test
+var=$(ls) instead " in var we can use $ and prenthis to execute under it and we use " for separe value/space or special char in variable
+
+#Quoting:-
+
+var=some value (incorrect) var="some value" (corect)
+:\" this repersent new line e.g. var=some\ value and also use for scaping the char
+(') single quote preserve the literal value e.g. var='this is $var' and out put would be this is $var
+(") double qtioe also preserve the letral value except $ sing e.g. var="this is $var" and output would be (this is "and value of $var)
+
+#Man Pages:- man help get installed while installing the package and their associated help/cmd in man cmd
+
+exit status : echo $? if output is 0 means no error is some value in outpunt menas there is some error in command exit
+if you want to search in man page use (/) forward slass to search the the particluar item in it 
+How to search all man page in man :- man -k ( like man man and then search "/" to search for -k) once you done search with block 
+man -k will out the reference for next search
+man -k is synonims of "apropose" e.g. apropose block
+
+# Info Pages:- additional doc os man page in details more in structure formate and it works like book chapter 
+
+e.g. info <command> we can search like man page using the "/" and hit q to exit just like man page
+
+#Files and Directories:-
+
+/    -  the root directory or top of the directory 
+/bin  - user binaries 
+/boot - static boot files 
+/dev -  device file 
+/etc -  configuration file 
+/home - home directory 
+/lib -  shared libararies 
+/mnt -  temporary mount points
+/opt -  optional package 
+/proc - kernal and process file 
+/root - root uer home directory 
+/run -  application state file 
+/sbin - system administration binaries 
+/srv -  service data
+/tmp -  temporary files 
+/usr -  user binaries 
+/var -  variable data files
+
+there is man info page for "cd" user cd --help
+
+to see all the directory 
+use ll /etc or /home /bin etcetra to list dwon the content in the directory
+to see the content in the file use cat (catinent-display the content) cat /proc/cpuinfo
+pwd- get current location 
+cd <new location> - change directory
+cd - (go back to last location)
+cd ..  =go up one level 
+cd ../..  =  go up two levels 
+
+#Hidden Files and Directories:- 
+
+#Home Directories: 
+
+containg user home and direcoty or dedicated user profile for that user unde /home 
+cat /etc/passwd - contain all the user in linux (this is master sheet of users in linux)
+check the environment variable use "env" also check the man page for "env"
+Check all the user details fo user use "env" to see the details about the current user 
+
+#Absolute and Relative Paths:-
+
+echo "Helo Wolrd: >> file1
+check cat ./file1 this is relative path
+cat /home /user/file - absolute path (to use absolute path u can be anywhere in the direcotry)
+
+#Files and Directories:- 
+
+Working with directory :
+mkdir = create a new directory 
+cp -r = <source><destination>
+mv = move a directory 
+rm -r <directory = delete a directory
+
+Working with files
+touch <name> = creata a file 
+cp <source><destination> = copy a file 
+mv <file><New Location> = move a file 
+rm <file> = delete a file
+
+move file back to original locaton 
+
+mv filename/filename ./filename (where "." i currebt working directory)
+
+rm -r file/ (-r recursevely mean delete all the directory and their content)
+
+to make a subdirectory including parent directory  use "mkdir -p dir/subdir"
+
+#Case Sensitivity:- lower and upper case letters have different ASCII repersentation 
+
+if we create a dire like (mkdir New Folder : it will create two new directory with New and Folder0 to delete them rm -r New/ Folder/
+We can use mkdir New\ Folder it work to create a single directory called "New Folder" and also it will work when we will use mkdir "New Folder"
+we can also use "file" cmd to create a directory which give more info 
+lsblk to see the disk 
+cat /etc/fstab this is the location where file system mount
+
+#Simple Globbing:- Globbing is primarily used to to match patters in filenames or txt by using a wildcard char to create the patters
+
+question mark :- match any singal character (ls ?)
+
+ls ???? =  (one question mark is treated as one char so it will show the directory which are having four cahr long )
+so in this way we can partially match the file e.g. ls ????1 
+
+* Asterisk - match any number of char:- 
+ls file* = that si going to return which mathces with "file" and will list down all everuthign with 0 np to char.
+
+[] - brackets = are used to match a char from a range 
+e.g ls ???[1-3] it will return like file1 file2 file3 
+[[:upper:]] or [A-Z] - match upper case char.
+[[:lower:]] or [a-z] - match lower case char.
+[[:digit:]] or [0-9] - match digit 
+[[:alpha:]] or [a-zA-Z] - match either case char.
+[[:alpanum:]] or [a-zA-Z0-9] match alphanumeric.
+it help us to archiving file moving file 
+
+#Files and Directories:-
+
+Archiving files and directory:-
+
+tar cf (cf create file) archive.tar
+
+to see the archive file tar tf archive = it will print all the files under archive.tar 
+
+to add more file under archive.tar = tar rf (r=append) archive.tar name_the_file
+
+How to extract the archive.tar or a singal file in it
+
+Just one file extract = tar xf (x-extract) archive.tar name_the_file
+
+to extract all file = tar xf archive.tar 
+
+* we can also use Globbing to play around.
+tar xf archive.tar --wildcard 'file_name?'
+#Archives and Compression:-
+
+the process to reduce the storage.
+remove all the files under the folder = rm rf *
+
+tar czf (z=compress file) archive.tar file_name*
+
+in gzip formate move the file in it= mv archive.tar archive.tar.gz or archive.tgz
+
+bzip2 
+tar cjf (j=bzip2) archive.tar.bz2 file_name*
+
+zip
+zip -r archive.zip file_name*
+
+#Command Line Pipes:-
+
+grep search_name file_name
+
+wc - print the line in the file (word count)
+
+wc -l file_name 
+
+cat file_name | grep word_search | wc -l
+
+cat /etc/passwd | grep user_name
+
+cat /etc/passwd | grep name_user | cut -d: (:=based on the column) f6 (f=field)
+
+#I/O Redirection:- We can use I/O redirection to send the output from a command into a file, or to read input into a command from a file. 
+This allows us to create files from our result sets!
+
+cat file_name | grep Search_name > result.txt
+
+to see the result use cat result.txt
+
+if we will use >> to save the resule it will append the resule mean 
+
+if we want to feed outut to cmd
+grep search_name < file_name.txt = to read input in a file
+
+#Basic Regular Expressions:- regular expression is used to matching the pattern silimar to Globbing but this quite good way.
+
+"^Search_Name" = Match start of line
+"Search_Name$" = Match End of line 
+"^SEarch_Name$" = Match Start and End of line
+"Search_Name|Search_Name" = Match Either String or Char
+"Ap*le" = match an S followed by zero or more Ps followed by le
+
+cat search_file | grep -E "^search_Name"
+
+#Basic Shell Scripting:-
+
+================================
+#!/bin/bash = is called sabang 
+
+# these are comment
+
+echo "please enter your name: "
+read name
+echo -e "hello $name!\n"
+===============================
+ 
+touch script.sh = .sh is bash script extension
+
+chmod +x script.sh to make script.sh executable (+x = make executable)
+
+By looking at echo $PATH env variable you will see the eceutable bash file for user if user having access to bash.
+
+#Awareness of Common Text Editors (vi and nano):- 
+
+vim & nano:- cd 	
+
+
+ vim quite well utilized editor 
+
+head = print the result fisrt 10 line 
+tail = print the result last 10 line
+
+head -n 100 = give me 1st 100 line 
+
+tail -n 100 = give me last 100 line 
+
+vim file_name.txt = give the result in txt file 
+
+gg = go to the first line of the file 
+G = go the last line of the file
+10G = go to the 10th line of the file 
+hit escape = out of insert mode
+i = insert at cursor 
+I = insert at start if line 
+0 append line under cursor
+:w = quite file 
+:q = quire vim
+:wq = write and quite 
+:set nu = set the line in the file 
+
+if you want to lear vim = vim and tab will come vimtutor 
+
+nano :- 
+
+it help on below of the screen to take help 
+
+writing:-
+ctrl + X = exit, will prompt to same 
+saving :-
+ctrl + o = exit, will prompt to save
+
+nano -c file.sh or file-name = going to make to cursor position in last of the file
+
+#Differences between Windows, OS X, and Linux : - 
+
+Linux and Mac os is unix like Os where as windows having its on preprietry 
+Mac os run on its own H.
+
+#Distribution Lifecycle Management:- 
+
+release model:-
+
+standard & cutting edge 
+
+#Understanding Computer Hardware:- 
+
+cat /proc/cpuinfo to check the H/W info
+
+RAM is volatile = do not save into storage.
+
+use = free (cmd) to check.
+
+free -m  
+
+df -h ( df = disk free -h= human readable)
+
+/dev/sda (sda1 = scsii device a partitiona 1) this called secondary storage
+
+Network :
+
+ifconfig = interface configurtion 
+
+
+Driver:- 
+Driver installed under the kernal to interact wirh H/W 
+
+#Where Data Is Stored:- 
+
+Programs and Configuration:- common location for system and configuration
+
+/ 
+/boot/
+/etc/fstab
+/etc/passwd
+
+host file location = cat /etc/hosts
+
+cat /etc/resolve.conf = name server provide the name lookup (like DNS server)
+
+* where data store = cd /sys/ 
+
+
+mount | grep sysfs =  virtual file system 
+ 
+#Processes:- Data used by running process
+
+check the info in "man ps"
+
+Eevry runing process has its own PID (process ID)
+
+cd /proc = we used to get the PID cause /proc 
+
+ps aux = dump out the all the process 
+
+to search for indivisual = ps aux | grep Search_name
+
+to check how many process running by indivisual 
+
+ps aux | grep search-name | wc -l
+
+want to see same info in linux formate = ps -eF
+
+ps -eF | grep Search-indivisual 
+
+* /dev/ = system info reg attached h/w
+
+mapper = map the block device 
+
+#System Messaging: - Viewing and accessing system message or kernal message or kernal ring buffer 
+
+dmesg | grep sda
+
+dmesg used for troubleshoot for kernal related h/w issue
+
+#Logging : - Common location for system and application log data.
+
+There are many logs.
+
+/var/log/message = 
+
+/var/log/syslog = general log for system 
+
+crontab =  run the eamon on interval time e.g. to run the scripts 
+
+crontab -l
+
+/var/log/boot.log
+
+check all the logs under /var/log/
+
+#Internet, Network, and Routers : - 
+
+ip addr show 
+
+ifconfig 
+
+#Querying DNS Client Configuration:- 
+
+cat /etc/resolve.conf 
+
+host www.ggogle.com = host to ip 
+
+diag www.google.com = host to ip 
+
+
+if you want to exclud comment in the output 
+
+cat /etc/resolve.conf | grep -v "#" = as example which run on every cmd
+
+
+diag @1.1.1.1 = 1.1.1.1 is Cloudflare DNS 
+
+https://thebestspinner.com/v4/
+
+DNS Resolution occure: 
+www.example.com
+
+. > .com. (TLD top level domain) > example.com. > www.example.com we dont do anything till now and then ip address in system
+
+#Querying Network Configurations: Client configuration
+
+ip route show  = show the current route table 
+shows the default gateway
+
+ip addr show or ip a s or ifconfig = 
+
+nmcli = network manager cli  
+
+what network usage = netstat / ss (socket) this utility work to print out some active connection
+
+netstat -tlnp (t=tcp, l=listening, n= numeric, p=port no )
+
+to check which service on which port = cat /etc/services | grep 22
+
+we can do same using = ss -ltnp
+
+if you want to see for udp = ss -ulnp
+
+#Root and Standard Users: - basic security 
+
+if any standrd wanted to wanted to become super user type = su and put the password 
+
+get out of it to normal user hit = ctrl + d
+
+cat /etc/sudoers
+
+cat /etc/gorup | grep useranme 
+
+cat /etc/passwd | grep root
+
+
+sudp su - (- das is to keep my env in another user)
+
+rm -rf /* = it will delete entire file filesystem 
+
+cat /etc/passwd = example is below 
+
+ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash = (ubuntu = user, x= password in hashed, 1000=user id, 1000= group id Ubuntu = just long name in the form of GECOS, or human user name 
+
+/home/ubuntu = home direcotry
+
+/bin/bash = bash shaell 
+
+/bin/false / /bin/nologin = not having login shell 
+
+cat /etc/shadow = in this section we can see user hashed password and many more about the user
+
+group = check user in group 
+
+cat /etc/group 
+
+audio:x:29:ubuntu = (audio is grpup, 29 group ID, ubuntu is user in that group) 
+
+for indivisual user = groups User_Name
+
+System Users:- some its called service account 
+
+install apache2 and start the serviecs.
+
+check the port lestinign on = ss -lntp
+
+check the process copy the process id from above genreted output = ps aux | grep PID
+
+copy the www-data user from above output 
+
+to see the user added = cat /etc/passwd | grep www-data = www-data is apache2 user in real 
+
+how user esxit = cat /etc/passwd | wc -l
+
+
+=========
+
+apt-cache search mysql
+
+grep for mysql server = apt-cache search mysql | grep server 
+
+search for "mysql-server-core-5.7"
+
+
+now install the mysql 
+
+apt-get install mysql-server-5.7
+
+check the PID go to services status > using PID chech the user  
+
+User and Group Commands:- 
+
+How exist in the system/user = cat /etc/passwd 
+
+check the = man useradd
+
+create user:
+
+useradd User_name = useradd afroz 
+
+afroz:!:18352:0:99999:7::: (!= shows user not having password)-
+
+now set the password 
+
+sudo passwd afroz = for setting up password then put the password 
+
+how to change the user = sudo su - username or su - username
+
+for user infor = man usermod
+
+to assign bash shell = sudo usermod - s /bin/bash username
+
+Now its tiem to create "Home Direcrtory" for user
+
+ubuntu having "mkhomedir_helper" command to make home dir for user 
+
+mkhomedir_helper username 
+
+to check = ll /home = will list all user home dir.
+
+We can also add Shell/home dir at the user creation time by putting paramerts.
+
+useradd -m user_name
+
+======
+groups = to shows the user is a part of groups
+
+groupadd testgroup = create group 
+
+Now we have add user in group 
+
+usermode -a -G testgroup or grpup_name User_name = (-a = Append)
+
+How to add any group in sudoers to execute and run the bash command 
+
+visudo = to added the group in it just like rook has in it.
+
+to check or validate the added group = cat /etc/sudoer
+
+once you ran the "groups" cmd 1st group is primary group and it one only for any user.
+
+Primary group used to create a file which has the all rights.
+
+#User IDs:- 
+
+UID 0 - Always the root acccount  
+UID 1-99 - traditional reserved tfpr system account 
+UID 100+ - standard users 
+UID 65534 - reserved for the user noboday.
+
+while creating a user using LDAP, Kerboros or AD UID play a important role on it.
+
+#File and Directory Permissions and Ownership: 
+
+drwxr-xr-x = ( d = directory, if  it start from "-" means its a file)
+
+drwxr-xr-x = (drwxr = user , xr = Group, x = Everyone)
+
+drwxr-xr-x =  these all were set by umask or user mask 
+
+chown = change the user that own the file as well as the groups that own the file
+
+chmod = change the mode whether its read/write or execute across veryone 
+
+chown :testgroup testfile = (befroe the column user : after the colums group) in the last file_name
+
+chwon user_name:Group_Name File_name
+
+e.g. chown user_name File_name
+
+chmod 644 testfile =  number is having specific value e.g. read, write, execute 
+
+#Using Temporary Files and Directories:- 
+
+check for = man mktemp to make temp file temprorary
+
+#Symbolic Links:-
+
+symbolic link just like shotut in window file. 
+
+ln -s target reference_folderorFilename
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
