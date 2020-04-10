@@ -1,0 +1,1868 @@
+
+#Pseudo File Systems:- 
+
+sudo file or pseudo file exist during the sytem runing.
+
+There are two pseudo file that exist and in transient in nature is below.
+
+1. /proc 
+2. /sys
+
+1. /pro :- this file system contains the information about the process which run by the  indivisual program
+in the form of PID. And we can easly find out the asscoite runing services or pragram by looking at PID no.
+
+2. /sys :- This file system contains the system/H.W related file system which helps to run the keranl.
+kernal process the funtion under define file system formate. such as drive partion formate and also contain
+all the information associated with it.
+
+We can go in these file and look at the speific file such cpuinfo meminfo and many more.
+
+# Working with Kernel Modules:-
+
+Kernel is work as monlithic where as every kernel module interact and process accordingly
+
+uname = we can use parameter to see the spesific information about the kernal which has installed 
+ismod = to see the installed kernel module we use lsmod to list down.
+modinfo = to see the spesific kernel module we use modifo followed by module name itself.
+modprob = to installa or uninstall we use modprob.
+
+Note: Most of the time we use third party module to support the spesific services by kernel.
+
+#  Investigating Hardware: - 
+
+Linux device manageent:- 
+
+using below command we can look at the spesific h/w information on the system.
+
+lspci = it shows all the connected h/w information on the system.
+
+lsusb = it shows the usb information connected to usb port.
+
+lscpu = it shows how many cpu attached to the device and much more information about the cpu.
+
+lsblk = it shows the attached hard drive and they their file sysytem partion placing the parameter.
+
+Note : We can place addional paramert to list down the spesific information about it.
+
+# The Linux Boot Sequence : - 	
+
+BIOS = 
+
+bios checks all the connected device it.
+
+boot loader = once bios check boot loader process the GRUB to start the keral.
+
+kernel = kernal start and its start the intialization.
+
+intial = load the driver to process the inilization to run the system for usable.
+
+intialization = then system ready to use.
+
+dmesg = it shows the boot process log called ring buffer. traditional utility  
+
+journalctl -k =  systemd utility to see the kernel ring buffer.
+
+# init = 
+
+/sbin/init > /etc/inittab = run level 
+
+We do have many run level like 0,1,2,3,4,5,6 . each run levele having its own runing kernl feture.
+
+we can see these option while booting up the sysytem.
+
+init file contains all the file which make kernel bootable and run.
+this this tradtional method to bootup the system
+
+# upstart : - 
+ this is same as init howevere having different mechanism to boot up the sysytem "quickly" as compate to init.
+
+its follow the cycle to start and complete the cycle.
+
+#systemd : -
+
+Systemd = it helps to bootup the kernel with spesific set of serviecs.
+
+it has unit file under which serviecs are configired to be stated during the boot process.
+
+kernel looks only /sbin/init while booting, however elink are spesified to go and look for systemd unit file while booting up.
+
+to see all user systemclt on man page 
+
+#Change Your Working Environment: runlevels : - 
+
+runlevel = its determine how/ or which mode u want to use the system 
+
+every runlevel having its own feature to boo tthe system 
+
+to check the runlevel = runlevel 
+
+We can also change the boot run level while booting the system and assign the runlevel .e.g. 0, 1, 2, 3, 4, 5, 6
+
+#Change Your Working Environment: targets : - 
+
+The LPIC-1 candidate must know how to change a system's target for different operating environments.
+This lesson covers how this is done using systemd by using the systemctl command.
+
+Target unit (systemd) to change the state of the system while booting up by define.
+
+systemctl list-unit-file -t target = Shows all unit for available targets
+
+systemctl get-default = Shows all loaded and active units files 
+
+systemctl set-default =  change the default target to a different target
+
+systemctl isolte <target> = Will change the running state of the
+system from the current target to a different target.
+
+systemctl rescue = Almost identical to the system V init single-user mode,
+allows the root user to repair a system.
+
+types of target of which "system Admin" should be aware of.
+
+1. multi-user.target = multi-user syatem, smiliar t what runlevel 3 provided.
+2. graphical.target = multi-user system with a desktop env, similar to what runlevel 5 provided 
+3. rescue.target = pulls in a basic system and file and system mounts and provides  rescue shell.
+4. basic.target = basic system , used during the boot process before another target takes over.
+5. sysint.target = system initialization
+
+There are plenty of target file which we have to look at. we can play around by changing the target file.
+
+#Reboot and Shutdown Your System :-
+
+This lesson shows you the various commands that can be used to shut down and power off your Linux computer. 
+An LPIC-1 candidate will need to know how to use the poweroff, reboot, shutdown, and systemctl isolate
+commands to restart or bring a computer down from the command line. We also briefly introduce ACPI, 
+which the LPIC-1 candidate needs to be awareness of.
+
+Reboot Commands :- 
+reboot
+telinit 6
+shutdown -r now
+systemctl isolate reboot.target
+
+Wall :- broadcasts a message to all logged in users (after message is typed, terminate the message with a ctrl+D)
+
+Shutdown Commands :-
+
+poweroff 
+telinit 0
+shutdown -h+1 (shutdown -h 1 minute) if you wan to cancel the shtudown press ctrl+c.
+systemctl isolate poweroff.target
+
+acpid :- 
+Advance Configuration and Power interface, registers system events (such as pressing the power button or closing 
+laptop lid)
+
+#Main File System Locations :-
+
+This lecture discusses the main file system locations that the LPIC-1 candidate needs to understand: /, /var, /home, and /opt. 
+We will demonstrate the mount, fdisk, lsblk, and swapon commands to view mounted locations,
+and we will begin our discussions on partitions.
+
+. / bottom of the directory tree, the 'root'
+. /var the variable 
+. /home = the user home directory
+. /boot = boot directory where kernel and supporting files are stored
+. /opt - optional or 3rd party s.w location 
+
+Swap space = temporary storage that act like RAM.
+when percentage of RAM is full, the kernel will move less used data to swap, 
+swap file just like page file on windows OS.
+
+mount = can be used to mount partions to directories, or shows all existing mounts without any options.
+
+lsblk = used to show all block devices on a system and their names.
+
+fdisk -l /dev/diskname = Can be used to list out partition information on the specified.
+
+swapon --summary = Shows a summary of the swap usage on a system, same information can be found in /proc/swaps
+
+#Introduction to LVM:- (Logical Volume Manager)
+
+Here we will take a quick look at the basics of LVM.
+You will not need to know all of the ins and outs of LVM for the LPIC-1 exam,
+but you will need some basic familiarity with it.
+We will show you the structure of an LVM layout,
+along with some commands that will let you scan a system with LVM to see its structure
+
+Allow the ceation of "group" of disk or partition that can be assembled into single or multiple filesystem:
+
+1. Can be used for narly any mount point except /boot.
+2. Flexible - allow for resizing of volumes.
+3. Snapshot - allows for 'point in time' copies of your logical volume.
+
+Example layout of an LVM Grpup : 
+
+multiple physical drive or volume grouped into one virtual group and futher into logical volume and then ready to
+make a file system sych as (/ /var swap /home)
+
+pvs= list out the physical volumes in an LVM group.
+
+vgs = list out the volume groups within an LVM group.
+
+lvs = list out logical volumes within an LVM group.
+
+* to list down the installed package in debian = dpkg -l 
+
+#Legacy Grub:- grant unified boot loader on MBR
+
+Boot process : process 1.0 - boot file having one file called "boot.image" which require 512 byte of sie in MBR
+Process 1.5 - Post which there is one more file called core.image which help locate the kernel and devive.map file.
+
+Process 2.0 - in RedHat grub.conf and in debian main.conf for kernel to load with the help of device.map file.
+
+grub = invikes the GRUB shell environment 
+
+help = print the help listing for GRUB, or get more info on a command i.e. help 
+
+find = seach for a file in all partitions and list the device the file is on.
+
+quit = exit the grub shell
+
+#GRUB2 : next generation of GRUB 
+
+This lecture focuses on the next generation of GRUB, the GRUB2 boot loader. 
+We will also look at how UEFI systems work, and why they offer more features over the old MBR systems.
+We see an example of modifying a GRUB2 file, and how to regenerate a new binary from it.
+
+GRUB2 on GPT with UEFI = unified extensible firmware interface.
+
+UEFI support GPT for kernel boot and support 128 partition upto "zettabyte" where as MBR was supported unto
+(4 partition and extended upto 23 with 2TB of max size. 
+
+UEFI/BIOS -> stage 1 MBR(first 512 bytes for boot.img) -> GPT Header -> Partition Entry Array -> Stage 1.5 Typically empty sectory wirth core.img
+-> Stage 2 /boot/efi ( vfat or FAT32 ) ESP -> boot/grub2 with grubenv & themes
+
+grub2-editenv list = view the default boot entry for the grub configuration file 
+
+grub2-mkconfig = create (or updates) a /boot/grub2/grub.cfg file based on entries from the /etc/default/grub file 
+
+(on Debian system the '2' is omitted from the command name e.g.g grub-mkconfig
+
+update-grub = command that can be use to update a grub2 configuration after change to /etc/default/grub have been made, found on debian based system.
+
+
+# Interacting with the Boot Loader:-
+
+In this lecture, we work with the GRUB boot menu in both legacy GRUB and GRUB2. 
+We will practice booting the system using different kernel boot options, and learn how to reinstall GRUB to our disk. 
+We even do a manual walkthrough of booting our computer using one GRUB command at a time.
+
+NOTE: You will not be able to follow along with this lecture using the cloud servers. 
+You will need a locally installed virtual machine, as you will not have access to any boot menues from the cloud servers.
+
+GRUB2 is latest verison which is being used to boot the kernel on disk.
+we can look by going into boot option to check with version of kernal is used to boot and also spesify all the boot option from here.
+
+#Manage Shared Libraries:-
+
+In this lesson, we discuss what library files are and the differences between shared and statically linked files. 
+We show you some commands that will build a new library cache for you and why that is important. 
+You will learn about the various configuration files that point to library directories, 
+and how to use an environment variable to set up a temporary library location.
+
+. Files containing functionlity that other application can use
+. these file end in a '.so' extension for shared object.
+. found in the following location on linux system 
+
+. /lib
+. /usr/local/lib
+. /usr/share
+
+. Two types of library files.
+
+.1. Dynamic (end in .so)
+.2. Static linked (end in .a)
+
+ldd = print out shared object (libraries) dependendies
+idconfig = configure dynamic linker run-time binding, create a cache based on library directories and can show you what is currently cached.
+/etc/ld.so.conf = configuration file that points to directoris nd other configuration file that hold reference to lobrary directory locations
+legacy environment variable that points to a path where library files can be read from.
+
+#The Advanced Package Manager (apt)
+
+In this lesson, we look at the apt command. 
+A candidate for the LPIC-1 exam needs to know the most common commands to use with apt to install, remove, and upgrade packages. 
+We explain how apt works behind the scenes, and update a cloud server. We will also use apt commands to get more information about packages
+
+apt - advance package tool 
+
+installs application (and their dependencies)
+remove application 
+update & uprgade package 
+
+basic of how it worsk.
+
+read the /etc/apt/sources.list  = it contains all the url fo s.w repository 
+
+direct installation and uninstallatiobn of package to dpkg = once dependendies downloaded.
+
+/etc/apt/sources.list = configuration file tht lists out respository location for package 
+
+apt-get update = update the local apt cache with a listing of packages that can be updated/upgrade and installed 
+
+apt-get upgrade = upgrade the packages that have uprgades available 
+
+apt-get install = install packages from the repository in the sources.list file.
+
+=======
+
+apt-get remove application = it will only remove the application however their dependencies and configuration of file will still be left on the system.
+
+If we want to remve all = apt-get autoremove ( which will all the dendencies)
+
+Still appication configuration file exist in the system (to remove ) = apt-get purge application 
+
+apt-get dist-upgrade = this will upgrade to latest level of exiting and will install new available packages in system 
+
+This command keep upto data every packge in the system with latest package available.
+
+apt-cache search application_Name (apache, httpd) = output shows whole information about the apache application) including module 
+
+apt-cache show module_name = to see the more about the module of application search for it 
+
+apt-get showpkg = show more techincal info about the module of application.
+
+ 
+#Using Debian Package (dpkg):-
+
+
+This lesson focuses on using the Debian package tool, dpkg. 
+We will practice the most commonly used commands and options for dpkg, and see how they compare to similar functionality in apt. 
+We will explore the contents of a .deb package file, and learn how to reconfigure one that has already been installed.
+
+the .deb package containes :-
+
+ application or utility 
+ default configuration 
+ how and where to install the file that come with the package 
+
+dependencies need to already be installed or installed with the package 
+
+ apt handles dependencies for you, dkpg does not
+
+dpkg command 
+
+dpkg --info = display information on a package 
+
+dpkg --status = same as -info, but less details 
+
+dpkg -l lists out package that match the string provided 
+
+dpkg -i installed specified package 
+
+dpkg -L list out all file that were installed with a specifie .
+
+dpkg -r = removes a specified package but leaves the configuration files behind 
+
+dpkg -P = Removes a specified package and also any configuration file that wete installed with it.
+
+dpkg -S search through the package database for a file specified and lists out any mentions of the specified file ot string.
+
+dpkg-reconfigure = allow for the modification of a package by re-running th application configuration tool
+
+
+#The Yellowdog Updater, Modified (YUM):- 
+
+yum is acronym of Yellowdog Updater, Modified.
+
+This lesson will show you how to use the most common yum commands to install, remove, and update software on a Red Hat based system. 
+We will also look at zypper and dnf package managers for other rpm based systems. 
+We even use the yumdownloader utility to download an rpm package to use later.
+
+YUM:- 
+
+ Originaly used for the yellowdog Linux distribution.
+ Handles RPM package dependencies 
+ Install, upgrade, and removes packages
+ used on REd Hat Enterpriose Linux (RHEL), CentOS, Scientfic and older version of fedora
+ 
+YUM Setup:- 
+
+ Global yum configuration options are sent in /etc/yum.conf
+ Read repository information from /etc/yum.repos.d/
+ cache lates repository information in /var/cache/yum
+
+zypper - rpm used for suse or opensuse 
+
+dnf = dandified for fedora as RPM future replacement 
+
+ yum update = search online repositories for updated package compared to what is currenlty installed on the syste,, upgrades package.
+ 
+ yum search = search the yum repositories for a specified package
+
+ yum info = lists information about a specified package 
+
+ yum list installed = display all installed package 
+
+ yum clean all - cleans up all of yum cache information and its local database file.
+
+ yum serch httpd = search for package and pulling from internal repo.
+
+ cat /etc/yum.repos.d/epel.repo = to check the repo
+
+ yum info httpd = search info for httpd package
+
+ yum list installed | less = view multiple lines output in single page and "q" for quit.
+
+ yum install = installed a specified package and all of its dependendcies 
+ 
+ yum remove = uninstall a package, leave dependencies behind  
+
+ yum autoremove = uninstall a package and its dependencies 
+
+ yum whatprovides = find out what package provides a specified file name.
+
+ yum reinstall = reinstall a specified package or same package.
+
+ yum install yum-utils = we can download the package without insalling in a system to check the package.
+
+ yumdownloader mc 
+
+
+#The Red Hat Package Manager (rpm) :- 
+
+Learn how to use the rpm command to manage packages on Red Hat based systems. 
+You will see how to query, install, remove and upgrade software with the venerable rpm command. 
+Also, we show you how to use the rpm2cpio command to extract the contents of an rpm package
+
+
+#The Red Hat Package Manager (rpm):
+
+earn how to use the rpm command to manage packages on Red Hat based systems. 
+You will see how to query, install, remove and upgrade software with the venerable rpm command. 
+Also, we show you how to use the rpm2cpio command to extract the contents of an rpm package
+ application or utility 
+ default configuration 
+ how and where to install the file that come with the package 
+ listing of the dependencies that the package requires 
+
+The rpm database 
+ 
+ Location in /var/lib/rpm
+ use the rpm --rebuilddb command to repair a corrupted rpm database
+
+dependencies need to already be installed or installed with the package 
+
+ yum handles dependencies for you, rpm does not
+
+XXXXXXXXXXXXXXXwatch this videos once again.XXXXXXXXXXXXXXXXXXXXX
+
+
+#Virtualization and Containers:- 
+
+This lesson introduces the basic concepts of virtualization and containers. 
+Learn about their similarities and differences, and what the two technologies can offer for resource management. 
+We also introduce tools that are helpful when deploying virtual machines in a cloud environment.
+
+There are two types of container
+
+1. Machine container 
+2. Application container.
+
+see , Docker , Openshift , LXD , NSPAWN
+
+Watch thsi videos for cloud 
+
+for Linux D-BUS and Machine ID needs to be changed for clone ot template as we do on windows sysprep.
+
+
+#Your Bash Shell Environment:-
+
+We dive into the Bash shell environment and learn how to create our own Bash variables and functions. 
+Not only is this helpful for now, but it will come in handy when we start discussing shell scripts. 
+We also take a look at a few new commands and find out how to modify our Bash configuration.
+
+Bash = bourne again shell
+
+csh - c progarmming style symtax
+
+ksh - kornshell, based on the bourne shell with some feture added ofg the C shell
+
+zsh - Z shell (ksh+bash )
+
+Environment variable = 
+
+Syntax = VARIABLE=patch,command,alias 
+
+example : CWD=/hime/afroz/docs
+
+
+env = comman that desplay environment variable 
+
+echo = versatile command that can be used to print that value of a variable to the screen.
+
+set = display shell settings or shell variable for the session 
+
+unset = remove a variable or custome bash funtion 
+
+shopt = display shell options and their current settings
+
+env variable must be upper case = $PWD
+
+set | less 
+
+set -x = enable dibugging 
+
+./test.sh = will record in the history
+
+set +x = disable the debugging also use unset to disable
+
+export = command used to export a variable to the curent shell and any new shells started from the current shell
+
+pwd = display the full path to the current working directory 
+
+which = used to locate an application file that is located within the used PATH 
+
+type = used to determine if something is a funtion, file , alias, built-in or keyword
+
+e.g. type type , type cd.
+
+
+#Bash History and the Manual Pages
+
+In this lesson, we explore how Bash records command within their history in more depth. 
+We will also learn about the man pages, and how you can navigate them to learn more about commands and configuration files on your system. 
+This is crucial for any Linux System Administrator, including LPIC-1 candidates.
+
+  
+history = command thet shows the most recent;y ran commands 
+
+.basg_history = file located in the users home directory that contains the priviously run command
+HISTFILESIZE = environment variable that determine how many lines the .bash_history file will contain
+
+history file come from .bash_history in user home directory 
+
+check the manual pages for more ionformation about.
+
+Man pages are broken out into 'section'
+
+ Section 1: executable programs or shell commands (user command)
+ Section 2: syste, calls - funtions provided by the kernel 
+ Section 3: Library calls - funtions within progam library 
+ Section 4: Special file - typically those fund in /dev
+ Section 5: File formate and coverntions -for example /etc/passwrd and other configuration file 
+ Section 6: Games 
+ Section 7: miscellaneous items and conventions -e.g Man(7), regex(7)
+ Section 8: system admin commands - usually only for root 
+ Section 9: Kernel routes (non standar) 
+
+#Basics of Viewing Text Files:-
+
+This lesson revisits the cat and less commands, and we look at a few other new commands that can be used to view text files. 
+We also learn how to view the contents of files that are compressed. All of these are testable commands on the LPIC-1 exam.
+
+
+cat = used to concatenate (join) and view text file 
+
+less =  read only text viewing utility,. Allow for paging up and down within a file and keyword search 
+
+head  =  default to display the first 10 line of a file.
+
+tail =  default to display the last 10 lines of a file.
+
+
+zcat = used to view gzip compressed text files 
+
+bzcat = Used to view bunzip2 compressed test files 
+
+xzcat = Used to view XZ compressed text file.
+
+#Text File Statistics : - 
+
+This lesson explores how we can glean some information from our files, such as how many lines they contain, 
+the amount of words within a file, and byte counts. 
+We will use the nl, wc, and od commands to dive deeper into the contents and structure of text files. 
+We also learn how to use hash values to verify the integrity of files.
+
+nl = print the number of the lines in a file. output of the command can be modified to fit diffrent cases.
+
+nl file_name 
+
+wc = the word count command. can be used to print the number of words, lines or bytes in a file.
+
+od = the octal dump commnd. use to print out a file in octal or many other formate.
+
+md5sum = calculates and checks a files hash based on the MD5 algorithm.
+
+to check the md5 file = cat file_name.md5 
+
+once you modifiy the file the .md5 hash value will changed.
+
+check the "md5" file if that is modified = md5sum -c file_name.md5 (if it failed means file was modified 
+
+sha256sum = calculates and checks a file hash value based on the sha-2 hash algorithm using 256 bits.
+
+sha256sum test.sh = wil show hash value 
+
+sha256sum test.sh > test.sha256
+
+sha256sum -c test.sha256 = output will be ok 
+
+sha512sum = calculates and checks a file hash value based on the SHA-2 hash algorithm usin 512 bits.
+
+sha512sum test.sh = will show hash value output.
+
+sh512sum test.sh > test.sha512
+
+sha512sum test.sh512 = will show the hash value 
+
+sha512sum -c test.sha512 = result is ok.
+
+#Text Manipulation :-
+
+We continue our exploration of the command line by introducing some common text manipulation commands. 
+Learn how to filter data in files based on characters and sort the output. 
+We also learn how to print out unique values from a file. 
+Find out how to extract data from a file based on position and to combine files together.
+
+Note: Download the stats.txt and the list.csv files from https://github.com/linuxacademy/content-lpic-1 if you wish to follow along with the examples.
+
+sort = command used to sort and/or merge lines of a file.
+
+cat list.csv 
+
+sort list.csv
+
+sort -n list.csv
+
+sort -t ","  -k2 list.csv (outpurt sroted base on the alphabetical)
+
+
+uniq = displays uniq lines of a file 
+
+cat stats.txt
+
+uniq stats.txt (grouped consequative no)  
+
+uniq -c stats.txt ( to see how many no group togather)
+
+uniq --group stats.txt ( how grouping handle)
+
+sort -u stats.txt (all same no group in one)
+
+tr = used to translate (or swap ) characters in a file for another character.
+
+cat list.csv
+
+cat list.csv | tr ',' ':'
+
+cat list.csv | tr -d ','
+
+cat list.csv | tr 'A-Z' 'a-z'
+
+cat list.csv | tr 'A-Z' 'a-z' | tr ',' ':'
+
+cut = extract columns or fields of data from a file.
+
+cut -d','-f 3 list.csv 
+
+cut -d','-f 2,3 list.csv
+
+cat list.csv | tr ',' '\t' | cut -f 2,3
+
+paste = merge lines of files.
+
+paste command add file parelle
+
+paste list.csv stats.txt
+
+paste -d ',' list.cv stats.txt
+
+paste -d ',' -s list.cv stats.txt
+
+
+#More Text Manipulation:- 
+
+In this lesson, we learn some basic usage of the sed command. 
+We also discuss the split command and how you can put files back together after you break them apart with split. 
+Understanding these commands, as with all Bash commands that we discuss, are crucial for passing the LPIC-1 exam.
+
+sed = the 'stream editor' command. used for a veriety of task, commomnly utilized to alter text in a file or search and replace words.
+ 
+sed 's/desktop/worksatation/' list.csv
+
+sed -i 's/desktop/worksatation/g' list.csv (permanently replace) (g=globally)
+
+revert back to same state = sed 's/worksatation/desktop/g' list.csv > origial.csv
+
+check the new file = cat original.csv
+
+split =  command that is used to split a file up into invdivisual piece. by default each piece of the file contains up to 1000 lines.
+but this can be changed to a different value or fie size.
+
+cat fable.txt
+
+split fable.txt
+ ls
+
+cat xaa
+
+rm xaa
+
+ls
+
+split -b 100fable.txt
+
+ls 
+
+rm xa*
+
+ls
+
+man split = check this 
+
+split -d --verbose -n2 fable.txt
+
+cat x0*
+
+car x0* > new_fable.txt
+
+mdsum fable.txt
+
+md5 sum new_fable.txt
+
+*#Perform Basic File Management:-
+
+#Working With Files:-
+
+Learn the basic commands necessary for working with files: ls, cp, rm, mv, touch, and file. 
+We will practice each of these commands and display their behavior. 
+Understanding these commands and many of their switches are crucial to the LPIC-1 candidate.
+
+ls 
+
+ls -a 
+
+ls -l
+
+ls -d etc/
+
+ls -dl etc/
+
+ls -lR etc/
+
+touch file_name 
+
+touch -m file_name
+
+cp -vR etc/ etc_bak      (R= used to copy the content inside the dir)
+
+cp -i file_name file_name.back (prompt for action)  for override 
+
+rm -i file_name ( prompt for action ) for deletetion 
+
+rm -rf etc_bak (r=delete subdir under parent file) 
+
+mv = used to rename the file since no utils installed to rename the file 
+
+file = determine file type 
+
+file fine_name 
+
+
+#Working With Directories:-
+
+Learn how to navigate your Linux system with the cd command, and discover some of the Bash shortcuts that you can use to get around. 
+We also look into creating and removing directories, and we discuss the importance of the PATH environment variable.
+
+cd 
+
+mkdir 
+
+rmdir ( rm)
+
+
+$PATH
+
+which 
+
+wcich free
+
+
+#File and Folder Compression:--
+
+This lesson focuses on archiving and compressing files. We will use the venerable tar command, 
+and use various compression algorithms such as gzip, bzip2, and xz. 
+We also work with the dd command and show you how to use it to back up your master boot record.
+
+dd = copies and convert files, often used to create files of arbitrary size and to back up disk drives.
+
+dd if=boot.img of=/dev/sdc (inout file)
+
+dd if/dev/xvda of=/tmp/mbr.img (of=output file) 
+
+dd if/dev/xvda of=/tmp/mbr.img bs=512 count=1
+
+ls /tmp = check back file 
+
+tar = wraps up files and folders into an archive file. this command does not provide compressin on it own.
+
+tar (tape archive)
+
+gzip = ommands that creare .gz compresssed file 
+
+gzip passwd 
+
+ls 
+
+gunzip passwd.gz
+
+bzip2 passwd
+
+ls
+
+
+bunzip2 passwd.bz2
+
+gunzip = command that extract .gz compressed files.
+
+xz = 
+
+xz passwd 
+
+ls
+unxz passwd.xz
+ls
+
+#Finding Files:- 
+
+In this lesson, we will work with the powerful find command. 
+We will locate files based on a variety of criteria, and have the find command automatically execute other commands based on its results. 
+The find command is another crucial tool for any Linux system administrator's collection.
+
+-name = Find files based on their name 
+
+find . -name file_name 
+
+find / -name passwd
+
+find . -ctime 1
+
+-ctime = find file based on the time when they were last changed 
+
+find .  -ctime 1
+
+-atime = Find files based on their acess 
+
+find . -atime 2 (24*2)
+
+find /home/afroz -newer passwrd 
+
+find . -empty 
+
+-empty = find files or folders that are empty 
+
+find . -empty 
+
+find . -empty  -type f ( only empty file)
+
+
+-exec [comand] {}\;
+
+find . -empty  -type f -exec rm -f { } \;
+
+find ~ -name "*.tar.*" -exec cp -v {} /home/afroz \;
+
+ls file_name
+
+#File Globbing:- called Global command
+
+We have introduced file globbing with the star * character, now we will look at some other patterns that we can use to locate files. 
+File globbing is very useful to the Linux system administrator as they traverse their file system looking for various files and folders.
+
+* = Matches zero or more character.
+
+? =  Matches any single character 
+
+[abc] == matches any one of the char in the list, case sensitive 
+
+[^abc] = matches any one char except those in the list, case sensitive 
+
+[0-9] = matches a range of number 
+
+
+ls *.txt
+
+ls ?.txt
+
+ls ????.txt
+
+ls test?.txt
+
+ls [Pp]*.csv
+
+ls [p]*.csv
+
+ls [Ww]eather[Rr]eprot199[0-9]?2017*
+
+ls [^WtTJP]*
+
+ls /dir/*/
+
+#103.4 Use Streams, Pipes and Redirects:-
+
+#Understanding Standard Input, Output, and Error:-
+
+In this lesson, we work with the fundamentals of standard input, standard output, and standard error. 
+We have already been using some of the concepts in the course up to this point, 
+but now we are going to take a step back and find out what is going on 'under the hood.' 
+We work with redirecting these messages to other commands and files, and what their specific file handles are
+
+standard output = stdout
+
+redirect = >, >>
+
+standard input = stdin
+
+special char : <, | 
+
+
+standard error = stderr
+
+standard error has a 'file handle' no associatd with it: 2
+
+stdin = 0 
+
+stdout =1
+
+file_name.sh (stderr goes to screen)
+
+file_name.sh 2> error.log (stderr get redirected to errr.log file 
+
+file_name.sh 2>&1 | less (stderr and stdout get sent as stdin to the les command)
+
+#Redirecting Output to the Screen and a File:-
+
+We complete our section on redirecting stdout and stdin by introducing two new commands: 
+tee and xargs. Both of these commands are useful when working with long commands and multiple files. 
+We also learn how to use the xargs command to help make our find commands more efficient.
+
+tee
+
+echo "yep" > myfile.txt
+
+cat myfile.txt
+
+echo "yep some more" >> myfile.txt
+
+cat myfile.txt
+
+cat < myfile.txt
+
+cat /etc/passwd | less
+
+ls -d /usr/share/doc/lib[Xx]*
+
+ls -d /usr/share/doc/lib[Xx] | tee lib-docs.txt
+
+cat lib-docs.txt
+
+command | tee file | command | tee file | commnand | tee file 
+
+           phase1.log           phase2.log             phase3.log
+
+
+ls -d /usr/share/doc/lib[Xx] | tee lib-docs.txt | sort -r | tee lib-docs-rev.txt
+
+ls
+
+
+cat lib-docs-rev.txt
+
+ls test/
+
+find test/ -empty
+
+find test/ -rempty | xargs rn -f (xargs= grouped all the sub file on one file for process)
+
+
+grep -l "content_name" /test/file*
+
+
+grep -l "content_name" /test/file* | xargs -I {} mv  {} test/bak/
+
+ls test/
+
+find  ~ -name "*.sh" | xargs ls -al > sripts.txt
+
+cat scripts.txt
+
+
+*# 103.5 Create, Monitor, and Kill Processes
+
+#Reviewing the State of Your System 
+
+This lesson introduces you to how Linux processes work. 
+We will utilize the ps and top commands to view running processes on a system and find out how we can filter the results from these commands. 
+Every Linux system administrator needs to know what is going on with their systems in order to effectively manage them.
+
+process is a setup of instruction which loaded into memory:-
+
+ps = List the process status of each running process on the system.
+
+top = interactive, ner rel time monitroting of process runing on a system.
+
+man proc = manual page for the /proc pseudo file system directory.
+
+man singal = manual pages for the various singla states of process 
+
+once linux Os boot up it handle the control to PID 1 and this primari process called "init" or "systemd"
+
+some process strat the child process inb heararchi
+
+check the process heiracchi = ps -eH | less
+
+search /1 for systemd process 
+
+all the child process saved on the table to make sure kernel is aware about the process 
+
+PID2 = kernal space process and uunderneath is user space process 
+
+ps -u username 
+
+
+ps -eH (H=herarchi of the process) (e = list all the process)
+
+ps -e --forest 
+
+ps -efH = full formate lisitng of the command (it all come from /proc) 
+
+top = 
+
+press the "k" followed by PID to kill the process which eating more process.
+
+#Monitoring Processes:-
+
+We continue our discussion about system processes by learning how to stop them using different signals. 
+We take a look at the signals man page to learn where they are defined, 
+and we use various commands to glean information from our existing processes. 
+We also learn about the uptime and free commands to get more information about the state of our computers.
+
+uptime = View how long the system has been up, how many uses are logged in, and cPU load avareage.
+
+free = View used and available memory and swap space.
+
+free -m in MB
+free -g in GB
+
+pgrep = find process informationb based on proces name 
+
+pgrep apache2 = list out the PID which are relate dto apache2 serviecs or process 
+
+pgrep -a apache2 = show the list of command 
+
+pgrep - u user_name 
+
+man 7 signal = check it out
+
+kill = send a signal (usually SIGYTERM) to a process based on PID.
+
+kill PID no 
+
+kill -l = list out the great info
+
+kill -9 PID no (-9 is SIGKILL) 
+
+to seach PID rub pgrep follwoed by serviecs name 
+
+pkill - send a signal (usually SIGTERM) to a process based on process name.
+
+pkill httpd
+
+pkill apache2
+
+pgrep -a apache2
+
+pkill -x apache2 
+
+#Keep a Process Running:-
+
+This lesson focuses on how to keep processes running on a system, even if you are not actively on the computer. 
+We learn about the screen and tmux multiplexing window managers, which allow you to keep remote sessions active on a system. 
+We also look at running jobs in the background, and how to keep tabs on those processes and stop them when you need to.
+
+
+killall = kills all process based on a name porived as as argument 
+
+watch = run as command at specified intervals, used to montiro a comands output.
+
+screen = A terminal windows manage that allows you to run commands in an isolated session.
+
+tmux = A modern terminal windows manager (loke screen) with extr feautre.
+
+killall -a httpd 
+
+killall -s 9 httpd 
+
+watch date 
+
+watch -n 5 date 
+
+screen 
+
+watch -n 3 date 
+
+to leave the session alive "Ctrl+a d"
+
+now we detached from session terminal 
+
+to login back again on the sae terminal 
+
+screen -r
+
+ to check the screen session = screen -ls 
+
+exit = to bring to original prompt.
+
+tmux = 
+
+ctrl+b d = leave session alive 
+
+
+tmux ls = to see the session info left 
+
+tmux attach-session -t 0 (0=session ID)
+
+exit to logout from the remote sesion 
+
+nohup = a command that is preceded by nohup receives signal 1 (NOHUP) so that should a terminal windows close, 
+the process will still run as llong as the login session is not terminated.
+
+nphup ping www.gggole.com &
+
+jobs 
+
+tail -f nohup.out
+
+jobs -l 
+
+fg 1 (job no)
+
+ctrl+z 
+
+bg %1 = runing in the backgrpu 
+
+kill 2143 (kill the job)
+
+bg = sends a job to the background while it keeps running 
+
+& = when applied to the end of a command, the command is sent to the background returning the use of the shell to the user.
+
+fg = brings a job that is in the background into the forground 
+
+jobs = display a listing of the jobs that are in the bavkground.
+
+#Understanding and Changing Process Priorities:-
+
+This lesson will focus on process priorities. 
+Learn about the default priority an application receives when it starts up, 
+and how to change the priority for a process. 
+We will accomplish this with the nice and renice commands, and see how we can do the same with top.
+
+nice = command used to define a new nice level (priority level0 before an applicaartion is strted 
+
+renice = command used to change the nice level of an application that is already running.
+
+ps -o pid,nice,cmd,user
+
+nice -n 5  watch - n 3 date &
+
+renice -n -1 1390
+
+top > then 'u' > then put the use nanem to see wht process are runing by user.
+
+to change the nice level 'r' > and then PID > and then nice level to be setup.
+
+# Introduction to Regular Expressions:- 
+
+This lesson introduces regular expressions. 
+The use of regular expressions is a powerful means of locating text within files, in a variety of patterns. 
+We cover the most commonly used expressions that you will need to know for the LPIC-1 exam.
+
+
+
+grep g.m passwd (.=singal char)
+
+grep s..t passwd 
+
+grep 100. passwd 
+
+grep ^ (beging of the line 
+
+grep ^rpc passwd 
+
+grep bash$ passwd 
+
+grep [v] passwd 
+
+grep -i [a] paaswd
+
+grep [Aa} passwd
+
+grep ^[Aa].[Aa] passwd 
+
+grep ^[Aa].[Aa] [^h] paaswd 
+
+grep var* passwd 
+
+man 7 regex 
+
+# Using Regular Expression Tools:-
+
+Learn how to use some other tools from the command line to work with files using regular expressions. 
+The LPIC-1 exam does not expect you to be a master of regular expressions, 
+but it does expect that you know how to use them at a basic level with a variety of commands.
+
+sed 
+
+egrep 
+
+fgrep 
+
+cat passwd | sed -n '/nologin$/p'
+
+cat passwd | sed '/nologin$/d' > filter.txt
+
+cat filter.txt
+
+egrep 'bash$ passwd 
+
+egrep -c 'bash$' passwd 
+
+egrep '^rpc|nologin$' passwd 
+
+fgrep -f file_name passwd 
+
+cat file_name 
+
+fgrep -f file_name passwd*
+
+#Using the Vi/Vim Text Editor:-
+
+#Legacy MBR Partitions:-
+This lesson will show you how to use the fdisk and parted commands to create legacy MBR partition tables. 
+Note that a local virtual machine was used for this so we would have extra disks to create partitions on. 
+It is recommended that you set up your own local virtual machine to try these commands out on your own.
+
+lsblk = command used to list out block device (such as hard drives )
+
+fdisk = legacy command used to create partitions of the MBR (DOS) type.
+
+parted = modern command used to create partitiones of MBR or GPT types.
+
+partition ID's 
+
+83 - standard linux file system 
+
+82 -  linux swap partitions 
+
+8e -  Linux LVM volumes
+
+creating old type MBR 
+
+fdisk /dev/sda then type m to display help menu 
+
+press p 
+
+no partion 
+
+press n 
+
+partion type 
+
+press p 
+
+pres 1 as default 
+
+next acept efault 
+
+hit enter 
+
+press p to check the created partioned 
+
+press w
+
+write partion table 
+
+fdisk -l /dev/sda
+
+create a new partion 
+
+parted /dev/vdb
+
+type help 
+
+type p 
+
+mklabel msdos 
+
+mkpart 
+
+type = primary 
+
+file system type = press enter for ext2
+
+start = 1 with start with 1MB 
+
+End = 1000 with 1MB
+
+noq type quit.
+
+#GPT Partitions:- 
+
+We will use the gdisk command and the parted command to create new partitions using GPT. 
+The LPIC-1 exam expects each candidate to understand the differences between MBR and GPT and how to create partitions in either format.
+
+gdisk = thsi is a command in the style of 'fdisk' that can be used to create GPT partional on disk 
+
+parted = the parted command can be used to create botjh MBT and GPT disk partion
+
+above both do practice more and more = >
+
+#Swap Partitions :
+
+In this lesson, we create our own swap partition. 
+We also get an introduction to the /etc/fstab file, and briefly discuss its layout. 
+All of these skills are important for the Linux System Administrator, 
+as well as for those seeking to pass the LPIC-1 exam.
+
+fdisk, gisk, parted 
+
+any of these above command can be used to create swap file 
+
+gdisk 
+
+mkswap  = 
+
+swapon 
+
+swapoff
+
+make permanent again use the /etc/fstab file to make the entry of it so that in case of reboot of swapoff command it reamin there.
+
+
+#Creating Linux File Systems:-
+
+In this lesson, we move onto creating regular file systems under Linux. 
+We learn about some of the various file systems available to Linux, and what their uses are. 
+This is the stepping stone to mounting file systems and partitions to directories.
+
+linux file system are dvide into two part 
+
+1. non-journaling 
+
+ ext2 - 
+
+2. journaling 
+
+ ext3
+ ext4
+ xfs
+
+ btrfs -  use cow (copy on write), provide snapshot 
+
+FAT - file allocation table 
+
+EFI need FAT for boot partition 
+
+exFAT - extendd FAT file system, 
+
+ allow for larger than 2GB 
+
+ used for external disk drive 
+
+
+mkfs = create a new file system on a partition, can be use like so 
+
+mkfs -t [fs-type]
+
+mkfs.[fstype]
+
+blkid =display the file system universally unique identifier (UUID).
+
+mkfs -t ext4 or mkfs.ext4 -L SRV /dev/sdb1 
+
+lsblk -f 
+
+
+blkid /dev/sdb1
+
+lsblk
+
+#Disk Space Usage:-
+
+This lesson looks at how we can determine the amount of disk space that is in use and available on a Linux computer. 
+We also discuss inodes, which can be a sneaky problem if you run out of them. 
+We will look at the du and df commands, and how we can use them to track the status of our hard disks.
+
+df = command that shows the availabl disk space on a file syytem 
+
+du = command that display the amount of disk space in use.
+
+inode = an inode (index node) store information about files and folders, such as: permission, ownership, and fiel types. 
+Most file system contain a maximum number if inodes that it can contain 
+
+ls -i
+
+df -i
+
+du --inodes
+
+df -ih
+
+tmpfs = these are temporary file sytem used by kernel itself and system shutdown it goes away.
+
+df -h / = check with mount point 
+
+df --total -h
+
+du = disk usage 
+
+du -sh (s=summary)
+
+du -sh /tmp (check the tempraroy dir) 
+
+du -h --max-depth=2 /etc/ = how much space folder taking up 
+
+du --inode /etc/ = check how many inode used 
+
+#Maintaining a Filesystem:-
+
+This lesson will show you the commands that you need to know in order to maintain your file systems. 
+Linux file systems are very robust, but there may be times when you need to make adjustments to them, repair them, or 
+just see how they are configured. 
+We will discuss a variety of commands, such as: fsck, e2fsck, tune2fs, xfs_repair, xfs_fsr, and xfs_db.
+
+fsck = File system check utility. can be invoked via commands line , and configure in /etc/fstab. device must be unmounted before a check can run.
+
+e2fsck = file system check utility for ext2, ext3, and ext4 file system, can be used t reply the file system journal.
+
+mke2fs = utility for creating new ext2, ext3 or ext4 file systems.
+
+tune2fs, utility used to adjust prameters on a ext2, ext3 or ext4 file system.
+
+in linux fsck file system checker as we have for windows sfc
+
+lsblk -f 
+
+fsck -r LABEL== check the report 
+
+umount /dev/sdb or LABEL name = to umount the device before runing the fsck
+
+vim /etc/fstab
+
+e2fsck = another file system checker 
+
+e2fsk /dev/sda1 
+
+e2fsck -f /dev/sda1 = forece to check for repairable file system 
+
+
+mke2fs =  
+
+less /etc/mke2fs.conf
+
+mke2fs -t ext4 -L EXTRA /dev/sdb1
+
+tune2fs -l /dev/sdb1 | less
+
+mount /dev/sdb1 /srv/extra
+
+ls /srv/sxtra
+
+xfs_repair = utility used to repair XFS file systems 
+
+xfs_repair /dev/vdb1
+
+xfs_far = Reorganizes data stored in block on an XFS file system. Similar to running a defrag utility on an MS Windows file system.
+
+xfs_fsr /opt
+
+xfs_db = utility used to debug an XFS file system.
+
+umount /opt
+
+xfs_db /dev/vdb1 = now we will go in interactive command 
+
+freesp
+
+#Understanding Mount Points:-
+
+This is a quick lesson on how mounting works. 
+We show you a short animation that describes the mounting process, and what happens when data gets saved to a directory.
+
+/opt = locared in local file system 
+
+local fs>/opt
+
+/dev/sdb1
+
+mount /dev/sdb1 /opt
+
+now look like = /dev/sdb1/opt = to make it consistance make the changes in fstab file else it will again connect to local fs.
+
+#Mount and Unmount Filesystems:-
+
+Now that we have some basic knowledge pf mounting file systems, 
+we will take a deeper look at how this works using various options. 
+We also add a new mount point to our /etc/fstab file to make it permanent 
+and show an example of what happens when you save data to a file system that is not permanent.
+
+mount = command used to mount a file system toa mount point (directory)
+
+man mount = manual pages for the mount command, pay particular attention to the file sytem indepdent mount options.
+
+umount = command used to unmount a file system 
+
+mount 
+
+mount -t ext4
+
+cat /etc/mtab = mounted file system 
+
+ls -l /etc/mtab 
+
+cat /proc/mounts
+
+mount /dev/vdb1 /opt
+
+man mount 
+
+umount /dev/sdb1 or /opt or LABLE-SRV
+
+mount -L OPT -t xfs -o rw,noexec /opt
+
+ls /opt
+
+touch /opt/test.txt
+
+ls 
+
+umount /opt
+
+ls /opt
+no file there 
+
+make this permanent using /etc/fstab 
+
+ls /media 
+
+mount /dev/sr0 /media = (sr0 = cd drive )
+
+mount /root/install.iso -o ro,loop /media = assume u have iso file in root directory 
+
+#Basic File and Folder Permissions:- 
+
+This lesson breaks down the basics of file and folder permissions. 
+Before we can learn how to modify permissions, we must first learn how to read them. 
+We discuss both symbolic and octal permissions.
+
+Permission : Permission are broken down into three catogeries:
+
+1. User
+2. Group 
+3. Other/Word
+
+Symbolic Permission 
+
+r= read permission 
+w= write permission 
+x= execute permission 
+-= no permission 
+
+Ocatal Permission 
+
+4= read permission 
+2= write permission 
+1= execute permission 
+0= no permission
+
+#Modify Basic Access Modes:-
+
+Now that we have an understanding of basic permissions, it is time to learn how to modify them. 
+We will cover the chown, chgrp, and chmod commands to learn how to change permissions, also known as access modes.
+
+chown = change the ownership of a file or directory 
+
+chmod = change the mode of a file or directory, which will effect the item's permission 
+
+chgrp = change the group ownership of a file o folder.
+
+u=user 
+g=group
+o=other 
+
+chmod o-r file_name = (o=other, -=no permission, r= read)
+
+chmod -R o-r file_name* or folder_name/*
+
+chown user:group file_name
+
+ls -l = to verify 
+
+or
+
+chgrp group_name file_name = to change the group ownership 
+
+chwon user:group file_name 
+
+see the symblic link 
+
+chown user.group /home/foleder_name/file_name
+
+ls -l /home/folder_name/file_name
+
+# Modifying Advanced Permissions:-
+
+This lesson will focus on the more advanced topics of permissions. 
+Here we will discuss the uses and importance of: the sticky bit, suid bit, and sgid bit. 
+These permissions should not be overlooked so as to keep a Linux system safe and secure.
+
+SUID = the 'set user id' bit. file with an 's' in the place of the 'x' permission within he user's column have this 
+set. note that this will not work on bash scruipt anymore. also many file system can be mounted with the 'nosuid' option
+
+ls -l /etc/passwd = see the permission with 's'
+
+
+symbolic methid 
+
+chmod u+s file_name 
+
+replace 
+
+chmod u-s file_name 
+
+chmod 0764 file_name (fourth char used to special permission)
+
+SGID = the 'set group id' bit. files and folder with the 's' in the place of the 'x' permission within the group column have this set.
+this assign group ownership to files. useful for shared group direction.
+
+to share the file or folder to everyone we use SGID 
+
+ls -ld /foldr/file
+
+chmod -R 2770 /folder/foldr
+
+ls -ld /folder/folder
+
+su - user = to loing into another account 
+
+touch /foleer/folder = now user has access 
+
+chgrp group /folder/folderr/file
+
+sticky bit : the permission has a 't' in place of an 'x' in the others column. this permission only allows the creator 
+of a file to remove the file.
+
+ls -ld /tmp = evryone in /tmp dir has r,w,x permission 
+
+
+chmod 1777 /folder/folder
+
+ls -ld /folder/folder 
+
+only owner of that file or folder have abiliyy to delete 
+
+
+#Default File and Folder Permissions:-
+
+Find out where the default permissions of directories and files come from, and how you can change their values. 
+We will also explore the differences between a regular user's file and folder permissions to that of the root account. 
+These are important topics to consider when one is evaluating security within a Linux system.
+
+umask = shows the current umask setting can also b used toset a new umask value for the current shell session 
+
+default permission =
+
+777 = default for directories 
+
+666 = default for files 
+
+umask value = subtract the umask value from the default permission to get the current configured permission value.
+
+Permanent configuration :
+
+/etc/bashrc = umask set for whole syste, 
+
+/home/[user]/.bashrc = umask set for indivisual user 
+
+
+umask 
+
+expr 777 - 002 = chnage for read for oethr user 
+
+sxpr 666 - 002 = change for read for other user
+
+check = vim /etc/bashrc
+
+umask u=rwx,g=,o=
+
+tocuh ne_file 
+
+mkdir mask
+
+ls -ld new_file mask 
+
+all these permission get erased as soos as reboot the system 
+
+make this permission permanent 
+
+
+vim .bashrc
+
+source .bashrc
+
+umask 
+
+#Understanding Links:-
+
+This lesson discusses links, which are essentially shortcuts to other files and folders. 
+We demonstrate the creation of a symbolic link, and how it relates to the original file. 
+Be sure to check out the lab for this section, as we dive deeper into the practical uses of both hard and soft links.
+
+ln = create a hard link to a file or director. this type of link will only work on the system of the originating file.
+
+ln -s = create a symbolic soft link to a file or directory. kjnks of this type can traverse fiel system.
+
+unlink = removes a link from a file or folder. this command is not covered in the LPIC-1 exam.
+
+
+ln -s test.txt test.txt.lnk
+
+ls -l
+
+symblink is nother but a shrotcut file in windows and alias in mac
+
+
+if file undre long dir we crate a symbolic link to access it quicly 
+
+#File System Hierarchy Standard:-
+
+In this lesson, we discuss the file system hierarchy standard. 
+This is the "standard" by which files and folders are laid out on a Linux file system. 
+This is important information since, as a system administrator,
+you would need to know the typical locations for important configuration files and applications.
+
+bin = executable file e.g. ls, df etc..
+boot = kernel alos reside here 
+dev = reside , hdd, kerbord et.cc
+
+etc = system services stem setinfg 
+
+hom e= user home dir where we download from iinetemneyc 
+
+lib = fpr 32 bi os 
+
+lib64 =- used to 64 system 
+
+media = connecte device such CD/DVD, external device usb 
+
+mnt = here external hdd drive connect 
+
+opt =  optonal location for app 
+
+proc = 
+
+root = 
+
+run = 
+
+sbin =  system admin 
+
+srv =  server application such web server 
+
+sys =  hw/ iinfo 
+
+tmp =  store temp data 
+
+usr =  more appplication sotr alon gwith applciation confirgruation 
+
+var =  file 
+
+# Finding Commands on a Linux System:-
+
+Aside from the find command, there are a few other commands that we can use to locate files and folders on a Linux system. 
+This lesson will introduce the locate, updatedb and whereis commands. 
+We will also learn the differences between how these commands work as opposed to the find command.
+
+locate = command that searches a local databse of files and flders looking for items thta match the search cretria 
+
+updatedb = update the database that the locate comand uses
+
+whereis = thsi command loctes binary, sources and /or manual pages for a commands.
+
+locate passwd 
+
+sudo updatedb = to update the local DB
+
+locate updatedb.conf
+
+less /etc/updatedb.conf
+
+whwreis cd
+
+to serch for file forlder use WHEREIS and LOCATE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+																			 
