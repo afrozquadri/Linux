@@ -1,0 +1,2447 @@
+Course intoduction : 
+
+Focused on below content : 
+
+System Lgging
+Security users and group 
+networking and their services
+bash shell environment 
+
+#Setting Up the Shell Environment:-
+This lesson discusses the differences between the interactive login shell and the interactive non-login shell. 
+We will look at the configuration files that make up these two environments and the order in which they are loaded. 
+Knowing the differences between these two types of shell environments is important for Linux system administrators and anyone using automated deployment tools.
+
+For more details on Bash Startup Files, see: http://www.linuxfromscratch.org/blfs/view/svn/postlfs/profile.html
+
+Interactive login shell :
+
+Step-1
+
+/etc/profile --> /etc/profile.d/* (user profile load into /etc/profile from /etc/profile.d/*)
+
+Step-2
+
+/etc/profile --> ~/.bash_profile (or ~/.profile) ( profile load into user home dir ~/.profile)
+
+Step-3
+
+~/.bash_profile --> ~/.bashrc ( reside on home dir to pull the system information )
+
+Stpes-4
+
+~./bashrc --> /etc/bashrc (pull out the system configuration to work at)
+
+Interactive Non-Login shell :-
+
+Gnome or KDE 
+
+in this desktop envirenment we called terminal 
+
+~./barshrc --> /etc/bashrc ( here same as interactive login shell , pull the system configuration file)
+
+
+echo $0 = "-bash" [show the name of the process which user runing ("-" - indicate login shell)]
+
+for desktop 
+
+echo $0 = "bash [show only bash which means user logged in as interactive non login shell  
+
+/etc/profile :- The first file read on the login session. sets up system-wide environment, variable, umask, value, Bash hostory controls. etc..
+
+/etc/profile.d :- The directory that containes extra scripts configuration files for bash, the /etc/profile file will read in the contetns of the direcotry.
+
+/etc/bashrc :-  You can configure system-wide function and aliases here.
+
+/etc/skel :- The directory that containes the default .bash_profile, bashrc, and other files that are added to a users home directory when an accounts is created on the system.
+
+
+check below commands : 
+
+less /etc/bashrd
+
+ls -a /etc/skel
+
+~/.bash_profile : - this file can contain a users modified PATH environement variable and will source the ~/.bashrc file. This file can also be named ~./profile on some distribution.
+
+~/bashrc :- Local user command aliases and function are defined here, This file source the /etc/bashrc file.
+
+~/.bash_logout :- This file gets called on a user logout and can be used to shut down application, dsiplay a message , or to perform other environment cleanup task.
+
+~/.bash_login : - This file gets called on a user login, typically, .bash_profile and .bashrc are used instead of this file.
+
+
+#Customizing the Shell Environment:- 
+
+This lesson reviews some of the Bash modification commands from the LPIC-1 Exam 101 course, such as env, set, unset, and export. 
+We will also introduce some new commands that you will need to know for the exam, such as alias and function. 
+We will also discuss the importance of the PATH environment variable. 
+You'll learn how to make your own commands and have them available when you start a new shell.
+
+env = command used to view environment variable for the current shell.
+
+export = command used to allow child shell session to use an environment variable 
+
+set = by itself, display all bash settings, variable, and function, can also be used to enable and disable bash settings.
+
+unset = used to remove an environment variable and its value.
+
+alias : The alias command is used to create a shortcut to a longer command, typically with options.
+
+alias ll="ls -lh"
+
+function : A bash keyword used to indicate that a new bash function follows. a bash function is any custom command that a user can use in a bash shell.
+
+function name_ofthe_Function() { 
+ls ~
+ls /opt 
+} 
+
+check it out = name_ofthe_function
+it will list out the 
+
+to make permanent function or liasn = vi ./bashrc
+
+. (dot) :- the dot command is used to source or apply function from a file into the current bahs session or shell scripts.
+
+source : same as above, the dot command is an aliase to the source command 
+
+PATH : An environment variable that defines where application can be found by the bash shell without specifying their full path.
+
+
+###105.2 Customize or Write Simple Scripts###
+
+#Lecture: Basic Shell Scripts#
+
+This lesson is an introduction to the structure of a Bash shell script. We will go over how to create a script and run it from any directory on your system. 
+We will also discuss using arguments in your shell scripts to make them more flexible.
+
+-> #! = character sequence (known as the "shebang") tht can be used at the begining of any perl, phyton or bash scipts, 
+
+this sequence tell the system the the first is scripts the actual scripts interpreter follwos the shbang sequence.
+
+-> # (Comment) = this character indicates that what follow is a comment 
+
+-> Commands - Lines of code that consitues the scripts file itself besically if you can type and run a command at a bash promp. you can put it in a scripts file.
+
+-> Execution permission = Scripts file must have the execute permission set on them in order to be used 
+
+-> Paramters = Parameters are items that get passed to the shell scripts. the shell scripts acts on these parameters.
+
+Each parameters (or argumetns) is positional, which means that the location of the paramerts determne the value of the variable that is assigned to it
+
+example : command option1 option2
+variable assignment: 
+$1 = option1
+$2 = Option2
+
+to give access execute permission of scripts file = chmod u+x script+file_Name
+
+to check the evn of home dir = echo $PATH
+
+ir order to run any bash scripts = scripts.sh ( or go to that folder where sctips located and run scripts.sh)
+
+within linux and unix file extenssion really doesnt matter, any programm look at the file content to execute or run within it.
+
+.(dot) shows the current dir 
+
+--> create new scriupts 
+
+vim test ( we have not defined file extention)
+
+#!/bin/bash
+
+#comment section
+
+ls $1 $2
+
+:wq = save it 
+
+-->ls $1 $2 = positional arguments is command whithin comand  
+
+make it executable 
+
+chmod u+x test
+
+./test = as we are in the current dir
+
+./test /opt ( $1 1st argument int he scrts)
+
+/test /opt /home/ubuntu ( $1= 1st argument is /opt and 2nd argument is /home/ubuntu= user home dir)
+
+
+#Adding Logic to Your Shell Scripts#
+
+This lesson focuses on how to use if/else/elif statements for logical command executions in scripts. 
+We will explore some of the different ways to set up an if statement and test for different conditions. 
+Understanding how the if test works in Bash will not only help you on the exams, but also broaden the capabilities of your Bash scripts. 
+
+-> 'if' Statements = if, else, elseif, and fi statements are used to test the validity of an expression
+
+if [ -d /opt ]; then = here press enter ( d= directory ) (f=file)
+
+echo "/opt exist" = here pres enter 
+
+fi = press enter here, it will give you output 
+
+if [ -d /goooo ]; then
+echo "/goooo exist"
+else
+echo "/gooo does not exist"
+fi 
+
+-> test = the test command is used to test for various conditions
+
+if test -e /etc/hosts; then 
+echo "this is file exisits"
+else 
+echo "thsi fiel doent exsiot"
+fi
+
+-> ll = two pipe charctre togather indicates a logical OR as long as one side of the condition is true, then the statement is true.
+
+if [[ -d /opt || -f ~/derp }}; then 
+echo " this stememnt is true"
+else 
+echo " thsi is not true"
+fi 
+
+-> && = the logical AND sequence test two sides of a condition. if both sides combined evaluats to true, then the staement is true.
+
+if [[ -d /opt && -f ~/derp ]]; then 
+
+echo " this statement is true"
+else 
+echo "thsi stement is not ture"
+
+fi
+
+-> = = the equal sign is use dto check the equality of statement.
+
+VALUE="things"
+
+if [[ "$VALUE" = "things" ]]
+
+evaluates to true
+
+practical = use in if else statement
+
+-> != = this character sequence indicates inequality 
+
+VALUE="things"
+
+if [[ "$VALUE" != "things" ]]
+
+evaluates to false. since VALUE does equal "things"
+
+practicl = use in if else statement
+
+above come into exam 
+
+testing integer = -eq , -ne , -gt , -lt , -ge , -le 
+
+check all above in if statment
+
+echo $? = check that application ran successfull lat tile or not ( ir return 0 mean no issue)
+
+if [ $? -gt 0 ]; then
+
+echo "somethinf went wrong with the 'ls command."
+else 
+echo "everything is ok, continue on.."
+fi
+
+##Bash Loops and Sequences##
+
+We'll wrap up this section on Bash scripting by introducing loops, sequences, and command substitution. 
+We'll discuss the for, while, and until loops and how they differ from each other. 
+We will also talk about some of the commands that we can use to troubleshoot scripts. 
+Finally, we will work with the exit and exec commands, which can provide extra information for sections of our scripts.
+
+-> for = A for loop is used to loop over command in a script a fixed number of times.
+
+#!/bin/bash
+for i in 1 2 3 4 5 = i is going to be variable 
+do 
+ echo "$1"
+done
+
+#!/bin/bash
+
+for i in $(ls /opt) = we can use `ls /opt` instead of $(ls /opt) , $(ls /opt) is open a new shell with the shell
+do
+ echo "$i"
+done
+
+for i in $(seq 1 15) # if want incerement no use like $(seq 1 5 50) will show increment by 5
+do 
+ echo
+done
+
+-> while = A while loop ollps until the indicated condition is false. the loop will continue while the condition is ture
+
+#!/bin/bash
+count=0
+while [ $count -lt 6 ]
+do
+ echo "our current count is: $count"
+ let count=count+!
+done
+
+-> until = the until loop works like a while loop, expect that the loop stops when then condition is ture.
+
+#!/bin/bash
+
+count=10
+until [ $count -lt 1 ]
+do 
+ echo "our count is: $count"
+ let count=count-1
+done
+
+while = do thing thing while ture 
+until = do the thig while false
+
+#!/bin/bash
+
+#example reding from a file as input
+while read LINE
+do 
+ echo "$LINE"
+done < for.sh
+
+==========Same as above if you want extra line the output (echo "")============
+
+#!/bin/bash
+
+#example reding from a file as input
+while read LINE
+do 
+ echo "$LINE"
+ echo ""
+done < for.sh
+
+-> command substitution = command substitution is when the stdout of a command is used with another command
+
+-> read = the read command takes input from the user (or file), and applies that input to a variable from a command or script
+
+read GREETING
+hello there, how are you?
+
+echo "$GREETING" = it will print the output 
+
+-> exit = the exit command in a script will return a 0 to the opreting system, or you can specify a diffrent exit code for throubleshhoting purpose.
+
+adding exit command on while loop in the end 
+
+#!/bin/bash
+count=0
+while [ $count -lt 6 ]
+do
+ echo "our current count is: $count"
+ let count=count+!
+done
+exit 
+
+echo $? = check the return output 
+
+#!/bin/bash
+count=0
+while [ $count -lt 6 ]
+do
+ echo "our current count is: $count"
+ let count=count+!
+done
+exit 75 
+
+in above we added 75 
+
+echo $? = output will be 75 
+
+we can use exit command in the long scripts to very the particular part of scrpit working or not
+
+#!/bin/bash 
+
+touch /etc/mytest 2> /dev/null
+
+if [  $? -eq 0 ]; then 
+ echo "mytest file created"
+else
+ echo "mytest file not created
+ exit 75
+fi
+
+-> exec = the exec command can be used to redirect all output from a shell into a file (or another proces) without sending to the current shell.
+
+bash = create a new shell 
+exec > out.log = redirect output
+ls
+pwd
+exit
+cat out.log
+
+
+###106: User Interfaces and Desktops###
+
+# Install and Configure X11#
+
+This lesson introduces you to the basics of the X11 server and how it is used in Linux systems. 
+We will also take a quick look at Wayland, which is the future replacement for the X Window System.
+
+X.org = handle by it and this core display servr 
+alternettive randR, GLX, Xinerama, 
+
+X server architecture 
+
+Wayland = replacement for X windows 
+
+# Installing X11#
+
+login as root user on centos5 
+
+yum grouplist 
+
+yum grouplist "x Windows system"
+
+restart = telinit 5 = we need to runlevel 5 
+
+GDM = gnome display manager
+
+it give us basic display  = mouse, terminal nd clock
+
+check how to see default runlevel = cat /etc/inittab (at bottom of the file will see the runlevel)
+
+cat /etc/x11/prefdm = see at the bottom various level of x11 (display manager)
+
+systemctl get-default 
+
+cat /etc/systemd/system/default.target =  under want unit see the details of display mnger 
+window/display manager send the info the X window servr for everything.
+
+echo $DISPLAY
+
+out put will so how the X server runing 
+
+#X11 Configurations#
+
+This lesson will introduce you to the xorg.conf configuration file. 
+We will look at the various components that make up this file, and we will see how modern distributions handle X11 configurations. 
+We will also learn how to create a new X11 configuration and query our X server for display information.
+
+-> /etc/X11/xorg.conf =  Primary configurtion file used for the X display server. Use man xorg.conf for a full listning of all options
+
+which X
+
+ls -l /usr/bin/X
+
+ls -l /usr/bin/Xorg
+
+X -condgure
+
+X -config /root/xorg.conf.new = now you will have black screen with X cursor
+
+to come out from thsi creen ctlr+alt=back
+
+cp xorg.conf.new /etc/X11/xorg.conf
+
+telint 5 
+
+-> x(Xorg) = the X or Xorg command can be used to create a new configuration file for your X server.
+
+-> xdpyinfo = display information about the current X session and X server instance
+
+xpdyinfo = 
+
+vim /etc/X11/xorg.conf = lot more inof about th device 
+
+-> /etc/X11/xorg.conf.d/ = Director ythat contains a upplementary Xorg configuration files.
+
+
+#Remote Graphical Connections#
+
+This lesson focuses on how to use the network-aware capabilities of the X server to view application windows on a remote system. 
+We will discuss the security implications of this type of configuration and the techniques used to secure it. 
+We will also discuss using VNC to control a full desktop environment remotely, as well as introduce the newer SPICE protocol.
+
+-> xhost = older and insecure method of allowing client system the ability ti display remote X11 windows.
+
+xhost + = allow connect to x server 
+
+xhost - = disable
+
+ip addr show 
+
+xhost + IP _Address
+
+ssh -Y user@IP of remote machine 
+
+export DISPLAY="127.0.0.1:10.0"
+
+xeyes
+
+
+-> xauth = allows a user t oedit and review security information that grant a user the ability to control remote X11 cleint window
+
+xauth list = runing xauth
+
+-> VNC = virutal network computing enables a remote computer to control the graphical display of a remote syste,. insecure by default
+
+yum -y install tigervnc-server
+
+cp /usr/lib/systemd/system/vncserver@.sevice /etc/systemd/system/vncserver@:.service
+
+vim /etc/systemd/system/vncserver@:.1.service = see the user place holdrer u can also change the user 
+
+systemctl daemon-reload 
+
+vncpasswd = set the password for VNC user 
+
+systemclt start vncserver@:1
+
+system 
+
+systemclt enable vncserver
+
+vnc work on 5900 port 5901 1st recieve on 
+
+ss -tlpn | grep vnc
+
+open firewall for port 5900
+
+firewall-cmd --permanent --add-port=5901/tcp
+
+firewall-cmd -reload
+
+Vinagre is a VNC, SSH, RDP and SPICE client for the GNOME desktop environment.
+
+firewall-cmd --permanent --remove-port=5901/tcp
+
+firewall-cmd --reload
+
+ssh -C -L 5901:localhost:5901 remote_IP = now go to vinagre client and do the ssh for local host it will forward to remote IP
+
+-> SPICE = TLS encrypted remote desktop protocol that can be used to linux, windows and adriod system.
+
+simple protocoal for independent compyting environtment 
+
+ ###106.2 Graphical Desktops###
+
+#The Primary Linux Desktop Environments#
+
+In this lesson, we'll take a whirlwind tour of some of the most popular Linux desktop environments. 
+We will discuss some of their differences and what they all have in common. 
+We'll talk about the GNOME desktop (which we've seen in this course before) as well as introduce you to the KDE and XFCE desktops.
+
+-> GTK+Based Desktops = GTK+ is primary a 'C' language library. desktop that use this library 
+
+-> GNOME & XFCE = both are desktop env
+
+activity = area to have diff windows 
+
+-> Qt Based Desktops = Qt is a 'C++' laungage library used for grphical application. desktop that use the library include.
+
+->KDE
+
+###106.3 Accessibility###
+
+#Assistive Technologies on the Linux Desktop#
+
+In this lesson, we will discuss the assistive technologies that are available in the Linux desktop,
+such as the high-contrast and large text size settings designed to help visually impaired users. 
+We will also look at keyboard and mouse pointer modifications, as well as a few other features designed to assist users with special needs.
+
+Playing around the desktop look, font etc...
+
+orca --text-setup = for voice (go for it if u have to go )
+
+###107: Administrative Tasks##
+
+##107.1 Manage User and Group Accounts and Related System Files##
+
+#Adding and Removing Users#
+This lesson focuses on how to create new users on Linux systems and modify some of their environment settings at the same time. 
+We will discuss how to set passwords and temporary passwords for new users. We will also look at how to remove a user from a Linux installation.
+
+-> useradd = the useradd command is for the creation of new user accouts on a linux system.
+
+useradd -m ueer1 (m=home dir)
+
+ls /home = check home dir 
+
+passwd user1 = set the password for the user
+
+ctrl + f2 = login withe new user on anther termnal 
+
+exit 
+
+go back to old shell = ctrl+alt+f1
+
+-> passwd = this command is used to set a password for a specific user or can be utilized by a user to change their own password.
+
+useradd -m -c "user full name" -s /bin/tcsh \ (\= going to continew on next line)
+
+username
+
+passwd username
+
+passwd -e username (e= expire the passwod after 1st login)
+
+echo $shell
+
+-> userdel = the userdel command removes a users account from the system without the -r option the users home dir will not be removed 
+
+userdel user1
+
+ls -l /home = still have user home dir
+
+rm -rf /home/user1 = removed user 
+
+userdel -r user1 = remove the user home dir at same time
+
+#Adding and Removing Groups#
+
+Now that we've learned how to add and remove individual users, we'll take a look at adding and removing groups. 
+Group management is an important method of organizing users and what they have access to. 
+We will discuss how to add and remove groups from a system as well as how to view group membership.
+
+-> groups = the groups command will allow a user to see what primary and secondary groups they are a member of.
+
+groups = show the users added in the group 
+
+-> groupadd = this command is used to create a new group on the system.
+
+groupadd group_name
+
+useradd -G group_name_exists -m -c "user name" \
+user_name
+
+groups user_name
+
+-> groupdel = the groupdel command removes a group from the system. the users that were in the group will still exist on the syste, ,only the group configuration is removed
+
+groupdel group_name
+
+groups user_name
+
+#User and Group Configuration Files#
+
+Now that we know how to create accounts, let's take a look at where account information is stored. 
+We will look at the flat database files that contains this information: /etc/passwd, /etc/shadow, and /etc/group. 
+We will also look at some configuration files that help us create new user accounts, and we will use the getent utility to query for user or group information.
+
+-> /etc/passwd = flat file database that contians information on user and system.
+
+ls -l /etc/passwd = check the permission 
+
+less /etc/passwd = check what file contains
+
+-> /etc/shadow = this file contains encrypted password for accounts listed in the /etc/passwd file.
+
+
+less /etc/shadow = very similar to /etc/passwd file 
+
+$1$ = MD5 encryption 
+
+$2a$, $2y$ = Blowfish
+
+$5$ = SHA-256
+
+$6$ = SHA-516
+
+-> /etc/group = this file contains group definations along with what members belongs to each group.
+
+less /etc/group
+
+-> /etc/skel = this is a special dir that contians items that will automatically get added to a new user's home dir when the account is created
+
+ls -a /etc/skel 
+
+cat /etc/default/useradd
+
+
+
+-> /etc/default/ueradd = this configuration file uis referenced by the useradd comand when a new user account is created 
+
+-> getend = this command is used to query a database for inforamtion about a uer or group
+
+e.g. 
+getent passwd user
+getent group 1
+
+getent group 100 = 100 group ID 
+
+less /etc/login.defs = /etc/default/useradd come from here ( check it once agin )
+
+#User and Group Modifications#
+
+We'll finish this section on working with local user and group accounts by modifying accounts that are on the system. 
+We will look at modifying users, groups, and user passwords with the usermod, groupmod, and chage commands.
+
+-> usermod = this command i used to modify an exisitng user account settings: ie., shell, user ID, home dir, etc.
+
+usermod -s /bin/tsch user_name 
+
+getent passwd user_name
+
+groupadd new_group_name
+
+usermod -a -G new_group_name user_name
+
+group user_name = check the user belogns to which groups
+
+getent group new_group_name
+
+usermod -a -G new_group_new user_name
+
+getent group New_group_name
+
+usermod -L user_name = lock user 
+
+getent shadow user_name 
+
+usermod -U user_name 
+
+getent shadow user_name = check uuser accoiunt unlocked 
+
+useradd -r system_account
+
+getent passwd system_account 
+
+usermd -s /sbin/nologon system_account 
+
+getent passwd system_account 
+
+usermod -d /opt/system_account system_account
+
+getent passwd system_account 
+
+ls -l /opt
+
+mkdir /opt/system_account 
+
+chown system_account:system_account /opt/system_account
+
+ls -l /opt/
+
+
+
+-> chage = thsi commanf can list and modify the aging paramerts of a users password.
+
+
+chage -E 2020-12-12 user_name 
+
+chage -l user_name 
+
+chage -E -1 user_name 
+
+chage -l user_name
+
+chage -W 14 user_name 
+
+chage -l user_name
+
+
+-> groupmode = thsi command can modify attribute of an exisitng group such as name, group ID, Etc.
+
+groupmod 
+
+getent group group_name = change the group ID
+
+groupmod -g 110 group_name 
+
+getent group group_name
+
+groupmod -n new-group_name existing_group_name = rename the group name 
+
+getent group new_group_name
+
+###107.2 Automate System Administration Tasks by Scheduling Jobs###
+
+#Cron##
+
+Ready to get your computer to perform tasks for you automatically on a schedule of your choosing? 
+This lesson looks at cron jobs, which are tasks that we can configure ahead of time and have them repeat for us on a set schedule. 
+We will discuss where these jobs are stored and take a look at the system's scheduled jobs. 
+We will also learn how to prevent users from utilizing crontabs if your local policy does not allow them.
+
+-> crontab = the crontab command is used to view and edit a users cron tab file 
+
+/etc/cron.hourly
+/etc/cron.daily
+/etc/cron.weekly
+/etc/cron.monthly
+
+pre-existing directories that will run scripts file at set intervals (such as houly, daily, weekly or montlhy )
+
+/etc/crod.d = direcotory that contains cron jobs for the system
+
+/etc/cron.deny = usrs liested in thiss file will be prevented from using crontabs
+
+man 4 crontabs = local documents for crontab file and their formate 
+
+
+cat /etc/crontab = all info 
+
+crontab -e = for editing (temprorry )
+
+0 (min) 4 (hour) * (date doesnt matter) * (month dioes not matter) sat user_name /usr/bin/tar -cfz /docue,tms-$(/bin/date +%F).tar.gz Docuements 
+
+save and close 
+
+view the cron tab = crobtab -l
+
+sudo cat /var/spool/cron/user_name 
+
+crontab -r = remove crontab 
+crontab -l = verify 
+
+crontab -e = new cron tab 
+
+*/3 (everything 3 min run this ) * * * * user_name /bin.echo "hi there " >> /home/user_name/hi_there.txt
+
+save and close it 
+
+login as root useer 
+
+see user_name profiel 
+
+crontab -l -u user@_name 
+
+cat /home/user_name/hi_there.txtx
+
+cronta -r -u user_name = remove the crontab 
+
+ls /etc/cron* = list all crontab 
+
+cat /etc/cron.daily/logrotate = run daily 
+
+cat /etc/cron.d/raid-check 
+
+cat /etc/cron/deny = under this selected users will not run the cron tab 
+
+#At#
+
+In this lesson, we will take a look at the at command and the utilities that we can use to manage it. 
+While the cron daemon is used to schedule jobs and tasks that we want repeated on our system, 
+we use the at command to schedule jobs that will take place at a later time and will run only once. 
+Just as we did with the cron daemon, we will also look at how to control access to the at queue.
+
+-> at = the at command will let you schedule a one time job at a specific time.
+
+-> atq = this command lets you view your job queue.
+
+-> atrm = this command will remove a scheduled job using its job number.
+
+-> at.allow, at.deny = if a user is listed in at.allow then they are the only ones on the system tht can schedule at jobs. 
+if a user is listed in at.deny they can not scheduled an at job.
+
+yum install at 
+
+once installed enable and start the service.
+
+system start atd.service
+
+system enable atd.servic 
+
+at now + 5 minutes = will comand run after 5 mins 
+
+echo "nots for later:" > /root/notes.txt
+
+ASCII = (ctrl+D=EOT)
+
+atq = list of job to run 
+
+ls /root
+
+cat /root/notes.txt
+
+at 4:00 AM tomorrow 
+
+rm /root/notes.txt
+
+atq
+
+remove the scheduled job = atrm 3 
+
+at -f /root/propgram.sh 10:15 PM Oct 8
+
+atq
+
+vim /etc/at.allow = users can scheduled thw job 
+
+vim /etc/at.deny = users in this file can not schedule job 
+
+#Systemd Timer Unit Files#
+
+In this lesson, we will take a look at the newest entry in managing timed job execution: the systemd timer unit. 
+You may want to brush up on your systemd knowledge from the LPIC-101 Exam 101 course if you need to, 
+as this topic will delve into what goes into the systemd timer unit files. 
+We will discuss how these files are created and what differentiates them from at or cron jobs.
+
+-> Times units = purpose is that thsi is timer controlled by systemd 
+
+-> Each .timer unit file will have a matching .service unit file 
+
+   -) if you have a foo.time unit file, you must have a foo.service unit file.
+   -)
+
+two types of time = monotonic - pnbootsec
+
+real time - on calender 
+
+why not just us cron/at
+
+man 5 systemd.timer
+
+man 7 systemd.timer
+
+-> systemctl list-timers --all  = list out timers on a system 
+
+systemctl cat /systemd-tempfiles-clean.timer = will show monotonic timer
+
+-> systemctl cat <foo.timer> = Use the systectl cat command to review the contants of a timer unit file.
+
+-> systemd-run --on-active= = can be used to create a transeint timer, one that does not require a service file.
+
+systemctl cat systemd-tempfiles-clean.service
+
+system cat web-backup.service
+
+vi /etc/systemd/system/web-backup.timer
+[unit]
+
+description=file off thebackup 
+
+[timer]
+oncalander=*-*-* 21:06:00
+persistance=true
+unit=web-backup.service
+
+[install]
+wantedby=multi-user.target
+
+save it 
+
+now enabel and start the timer = systemctl enable web-backup.timer
+
+systemctl start web-backup.timer
+
+systemctl list-timer --all
+
+ls -l /root
+
+setup a job
+
+systemd-run --on-active=1m /bin/touch /root/hello
+
+ls -l /root = file got created now 
+
+###107.3 Localization and Internationalization###
+
+#Working with the System's Locale#
+
+Understanding what a system's locale settings are for and how to change them is an important skill for any Linux system administrator that works with international associates. 
+This lesson will show you how to view a locale's settings and make changes to them according to where the system will be used.
+
+-> locale = command that display locale information 
+
+locale = see output (come in exam)
+
+change to diff
+
+localectl 
+
+localectl list-locales
+
+LANG=pl_PL.utf8 = changing only language not time 
+
+locale = see output in polic langugage 
+
+yum -y install man-pages-pl = plic docuemnts now in man pages 
+
+-> localectl = set the default system language and character encoding 
+
+-> UTF-8 = This is the dominant charaacter encoding type for character on computer. this character encoding is part of the unicode standard.
+
+localectl list-locales | grep pl
+
+LANG=en_US.utf8
+
+cat enc-test.txt
+
+file -i enc-test.txt
+
+->ISO-8859 = character encoding formate used throughout the world, however UTF-8 is much more prominant.
+
+iconv = utility that can be be used to convert files from one char encoding to another.
+
+iconv -f ISO-8859-l -t UTF-8 newtest.txt enc-test.txt
+
+cat newtst.txt 
+
+localectl set-locale el_GR.iso88597 
+
+#Time and Date on the Linux System#
+
+Now that we have an understanding of a system's locale, we need to configure the time, date, and time zone settings. 
+This lesson focuses on this part of internationalization and how we can view current settings while making permanent changes to these same settings. 
+As Linux is used worldwide, this is another valuable component of a system administrator's skill set.
+
+-> date = this command will display the current date an time in multiple formates, and to set the date and time.
+
+date -u  universal time 
+
+date +%F (+ formate identifued % full date )
+
+date +%D
+
+date +%m/%d/%y
+
+date +%m/%d/%Y
+
+date +%a
+
+date +%A
+
+-> timedatectl = this command will display the current date and time settings, and will allow the updating of the systems time and RTC clock.
+
+timedatectl 
+
+date -s "12/1/2018 12:00:00" 
+
+date = as soon as system suthdow system will change the time 
+
+timedatectl
+
+timedatectl set-time "2018-12-1 01:00:00"
+
+timedatectl
+
+timdatectl list-timezone
+
+timedatectl set-timezone "antarica/davis"
+
+timedatectl set-timzone "america/new_york"
+
+
+-> tzselect = this is a menu driven command that will assist in finding a region time zome 
+
+tzelect = go by own 
+
+-> TZ = environment variable for a time zone that can be used in a script or a user bash profile.
+
+ls -l /etc/localtime
+
+ls /usr/share/zoneinfo = 
+
+
+-> /etc/localtime = On red hat based distrubution, this is a symbolic link that points back to /usr/share/zoneinfor/<time zone> as the system's time zone setttings.
+
+-> /etc/timezone = On debian based distrubutios, this file contains a system configured time zone seting.
+
+-> /usr/share/zoneinfo = the directory that contains all of the available time zones that  computer cuold potectianlly use for its settings.
+
+###108: Essential System Services###
+
+##108.1 Maintain System Time##
+
+#Working with Remote Time Servers#
+
+Now that we understand local system time, we need to learn how to connect our systems to upstream time servers. 
+With the Network Time Protocol (NTP), we can receive accurate updates for the current time. 
+This lesson will show you how to use the classic ntpd daemon and the modern chronyd daemon to synchronize your system's clocks with upstream time servers.
+
+startum 0 folloed by startum 1 
+
+startum 1 followed by startum 2 
+
+startum 2 
+
+-> ntpd = the network time protocol daemmon. this is the services that checks upstream time server for the correct time.
+
+-> ntpdate = command that can query a specified NTP server and receive a new time. Make sure that ntpd is not running prior to using this command
+
+-> /etc/ntp.conf = primary configuration file for the ntpd daemon
+
+-> ntpq = this cpmmand can query the ntpd daemon for varous bits of information.
+
+pgrep ntp = check ntp daemon status 
+
+service ntpd start 
+
+service ntpd status 
+
+date 
+
+service ntpd stop = to make sure while changing time it does not conflit 
+
+ntpdate 1.pool.ntp.org
+
+vim /etc/ntp.conf = in exam gfor server line in thsi file to know 
+
+service ntpd start 
+
+ntpq = query some info 
+
+ntpq -pn = server to comminucatin with 
+
+timedatectl = to check npt is connected ot not tp the server
+
+timedatectl set-ntp on 
+
+timedatectl = now check the status for ntp 
+
+systemclt start chronyd.service
+
+systemctl status chronyd.service
+
+vim /etc/chrony/chrony.conf = on ubuntu
+
+chrony = will prompt for its own cmd 
+
+activity 
+
+sources
+
+exit
+
+-> timedatectl = the status of the system configuration with an ntp server can be checked with this synchronizationb, use the 'set-ntpon' switch.
+
+-> chronyd = the modern ntp daemon used on computer that utilized systemd.
+
+-> /etc/chrony/chrony.conf = configure file for the chronyd daemon. this file has a very similar syntax to the ntpd.conf file 
+
+-> chronyc = this command is used to query the chronyd daemon for information on upstream NTP servers.
+
+NPT uses port no 123 on UDP 
+
+##108.2 System Logging##
+
+#Legacy Logging Systems#
+
+This lesson discusses the basics of the rsyslog daemon and the types of logs that it is responsible for. 
+We will explore the various methods of viewing these logs and the components of their structure. 
+We will also learn about the logger command and how we can use it in our scripts to send messages to the system's default log.
+
+standard Linux Log files = 
+
+/var/log/dmseg = Linux kernel boot message 
+
+dmseg 
+
+dmesg | less (less is pager)
+
+check for loggin priority = 0-emerg (system is unsable) , 1-alert (action must be taken immediatly) , 2-crti (critical condtion), 3-err , 4-warn, 5-notice , 6-info , 7-debug
+
+dmseg --level=err,warn = filter output for bettwr visualition 
+
+dmseg -x --level=err,warn | less
+
+Linux Loggin Facility = (kern = kernel messages, user = random user-level messages, mail = mail system, daemon = sytem daemon, auth = security/authorization message, syslog = messge generated internally by syslogd
+
+lpr= Line printer subsystem , news = network news subsystem)
+
+/var/log/message = stadard system log message 
+
+tail /var/log/message = last 10 new line logs 
+
+tail -f /var/log/messages
+
+
+/var/log/secure = security log message, containing information on login attempts.
+
+/var/log/maillog = local email log message (from and to this server)
+
+On system that are not using systemd, these logs are managed by rsyslog
+
+all logs file in linux is plain text file.
+
+-> dmseg = u utility that allows an administrator to view the /var/log/dmesg file in a text pager.
+
+-> logger = Command that cn be used to send information to the /var/log/message log file 
+
+logger "hey there"
+
+tail /var/log/message = logger send the mesage see on the output 
+
+logger -t "from-scropts" "just a test"
+
+grep "from-scripts" /var/log/messge 
+
+tail -f /var/log/secure
+
+grep root /var/log/secure
+
+-> tail , grep = common command that are used to persue the logs file on a Linux systems
+
+#Rsyslog#
+
+After our discussion of the legacy rsyslog daemon, we now take a look at how the service is configured. 
+We also explore how to send logs from one server to be stored on another server. 
+After we set this up, we then demonstrate how to modify our log retention through the logrotate daemon and its configuration files.
+
+-> /etc/rsyslog.conf = this is the main configiration file for the rsyslog logging daemon.
+
+vim /etc/rsyslog.conf 
+
+yum -y install lynx = 
+
+ls /usr/share/doc/rsyslog-5.8.18/
+
+lynx /usr/share/doc/rsyslog-5.8.10/index.html
+
+we can navigate through the file to check the hyper link 
+
+man rsyslog.conf
+
+check the rules in the file = vim /etc/rsyslog.conf 
+
+-> /etc/logrotate.conf = This is the main configuration file for the logrotate daemon that is responsible for managing the 
+
+storage and reotation of ild log files.
+
+-> /etc/logrotate.d/ = Extra logrotate configurations for other daemons can be placed here.
+
+ls /etc/logrotate.d/ 
+
+configure remote logging 
+
+vim /etc/rsyslog.conf 
+
+uncomment = $ModLod imtcp and $inputTCPServerRUN 514
+
+now restart the rsyslog daemon 
+
+login to another server 
+
+vim /etc/rsyslog.conf = on below of the line uncomment to setup the remot logging configure and configire the remote IP
+
+restart the rsyslog daemon 
+
+tail -f /var/log/message = see the remotore message (event)
+
+-> logrotate = The logrotate command will rotate logs based on the specified configuration.
+
+la /var/log = see messgae log (no shows log rotate date or old log)
+
+vim /etc/logrotate.conf = handle by daemon (we can play as per our conventent how to rotate the log)
+
+ls /etc/logrotate.d
+
+vim /etc/logrotate.d/syslog
+
+once you modify restarrrt the daemon 
+
+
+
+logrotate /etc/logrotate.conf = rotaote all log 
+
+ls /var/log = 
+
+logoroate -f /etc/logrotate.conf 
+
+ls /var/log
+
+#Introduction to the systemd Journal#
+
+In this lesson, we will learn about the systemd journal. 
+We'll take a look at the configuration file that dictates the behavior of the systemd journal, 
+and we will discuss how to make the journal permanent on our systems. 
+Once we understand the basics of the journal and how it operates, we can start using it to manage logs.
+
+systemd journal is binary file that everything that happen in the system 
+
+what journal collects : 
+
+-Kernel log message 
+-system log message, the same as what syslog wold collect 
+-system services that send the output to standard output and standard error 
+-Audit record for Selinux message 
+
+the default location for the journal is /run/log/journal/. this information would be lost on reboot (as it collects a lot of data)
+
+to permanently keep the journel:
+ - mkdir -p /var/log/journal 
+ - systemd-temfiles --creat --prefix /var/log/journal 
+
+man 5 journald.conf
+
+/etc/systemd/journald.conf
+
+ storage = 
+    auto 
+    persistance
+    volatile
+    none = no jurnel 
+
+ compression = 
+
+systemMaxUse=,RuntimeMaxFilesSize=
+
+#journalctl#
+
+We'll wrap up this section on Linux system logging by using the journalctl command to view the systemd journal. 
+Since most modern Linux distributions use systemd, it is important to understand how the systemd journal works and how to parse its information with journalctl. 
+We will also look at the methods for making the journal permanent on our system and the different commands that we can use to query the journal.
+
+-> journalctl -r = shows newest entry first 
+-> -e = jumps to the end of the page 
+-> -n = shows only the most recent entries and limits the amount of lines specifed 
+-> -f = shows the most recent log enties, and follows the journal as new entries are created . Much like the tail -f /var/log/messafe command 
+-> -u = shows only the entry for the unit specified 
+
+we can see activily what going on that particular services 
+journalctl -f -u httpd.service
+
+-> -o = formate the output of the journal controlled commnd 
+-> verbose = display the journal with all of the entry with their fields.
+-> json-pretty = frmats the output in multi-line json format. very useful for data analysis tools.
+
+Note: see man 7 systemd.journal-fields for explanations of the fields in this output
+
+->system-cat = sends output of a command to the journal
+
+journal -o json-pretty = see for data analysis 
+
+
+echo "hi there" | systemd-cat = send message to journa; 
+
+jourbalctl -r = se ethe output from echo command 
+
+-> x
+
+-> -k
+
+-> -b
+
+-> --list-boots
+
+journal -b <boot number>
+
+-> --since, --untill
+
+-> --disk-usage 
+
+-> --rotate 
+
+journalctl --disk-usage 
+
+journal --rotate
+
+###108.3 Mail Transfer Agent (MTA) Basics###
+
+#Basics of a Message Transfer Agent#
+
+In this lesson, we introduce the concept of the Message Transfer Agent (MTA). 
+The MTA is the component of an email system that routes email to its destination. 
+For the LPIC-1 exam, you do not need to know how to install or configure an MTA; 
+you just need to be aware of some common MTAs and their purpose.
+
+MTA- service that route email to ints intedned desination 
+
+sendmail = oldest MTA systemd 
+postfix = modern MTA 
+exim = used to be the default MTA for debian based distor 
+
+sendmail emulator layer = system admin can use sendmail style command on other MTA's (postfix, Exim, Etc)
+
+#Email Forwarding and Aliases#
+
+In this lesson, we'll learn how to set up local email forwarding to send email bound for one user to another. 
+We accomplish this with the /etc/aliases file and the newaliases command. 
+We'll also discuss how to view the email queue and how to use our own local. 
+forward file to forward email messages without the need for root privileges.
+
+-> /etc/aliases = this is a plain text file that can be modified to set up forwarding address for users on a system
+
+->newaliases = after a modification to the /etc/aliases file is performed, the newaliases command will then regenrted the /etc/aliases.db file that the MTA uses for mail delivery.
+
+if you do changes into alias update the db ans check = newaliase 
+
+mail 
+
+if mailx package not installed 
+
+yum -y install mailx 
+
+mail -s "testting" root@localhost = create user mailbox 
+
+hi there!
+
+ctrl+d to save the mesage 
+
+mail = check now 
+
+press d to delete and q to quire the file
+
+cim /etc/aliase 
+
+create new user which not exist in the system 
+
+newlaiase = to update the db
+
+mail =s "just chekcing" kenny@localhost 
+
+you there!
+
+mail = will get erro cuase user dosnt exist
+
+vim /etc/alaise = remove forwarding rule
+
+remove the created user 
+
+save and exit 
+
+newaliases
+
+systemctl stop postfix.service = check if any email get stuck 
+
+mail -s "getting stuck" kenny@localhost 
+help!
+
+mailq
+
+check that MTA is down 
+
+
+-> mail = the mail command can be used to send an email to use from the command line or to view the email of a user on the system.
+
+-> ~/.forward = A local configuration file that can be setup withinh a users home dir to forwrd email destined for itself to be sent to antother user and/or an external address.
+
+mailq is postfix command 
+
+sendmail -bp 
+
+systemctl start postfix.service 
+
+mailq = message ha sbeen delived and removed from queue
+
+su - normail_unser 
+
+vim .forward = aliase not required to forard message 
+
+\user_name or kenny@linuxacademy.com
+
+###108.4 Manage Printers and Printing###
+
+#The Common Unix Printing System (CUPS)#
+
+In this lesson, we will take a look at the Common Unix Printing System (CUPS) and learn how we can add and remove printers through the CUPS web interface. 
+We will also see how to use the log files from the web interface and explore the configuration files that makes up a CUPS installation.
+
+-> https://localhost:631 = thsi is the default URL for the locally install CUPS server, it will require a root login to add or remove printer here.
+
+-> /etc/cups = dir that contains the configuration file for the CUP print server daemon and printer settings.
+it is prefereble to use the web interface to manage the configure file located in the dir.
+
+sudo apt-get install cups printer-driver-cpus-pdf
+
+open web browser and open localhost:631 
+
+explore more on the web broser to get hadi on it how to configure PDF print
+
+from the broser itself you will be able install the pdf print.
+
+cat /etc/cups 
+
+ls
+
+check vim /etc/cups/cupsd.conf
+
+vim /etc/cups/printers.conf
+
+man printers.conf
+
+
+#The Line Print Daemon#
+
+This lesson focuses on how to print from the command line using the legacy lpd (Line Print Daemon) tool. 
+We’ll discuss how to manage print jobs and print documents with various options from the command line. 
+The ability to print files from the command line is useful when you need hard copy reports for system audits. 
+On the LPIC-1 exam, you will be expected to know how to manage printers and print jobs from the command line.
+
+ipd commands : - 
+
+-> ipstat = Display the status of CUPS server and configured printer and queue 
+
+lpstat -s  
+
+-> lpadmin = administrator tool to add, modify, and delete printers
+
+lpadmin -p name_printer -L "location of the printer" -v socket://printerserver:9100 -m modelof printer
+
+-> lpinfo  = this command display available printert devices and drivers that can be used 
+
+lpinfo -v = see the more info 
+
+lpinfo --make-and-model "Ho ever450" -m
+
+lpadmin -p 
+
+-> lpc = older (BSD-style) command that can be used to view information about installed printers. the status command will show the status of all installed printers
+
+lpadmin -p name_printer -m "drv://hpcups.drv/hp-envy_4510_serise.ppd -E
+
+lpc status = check the status and will be redy to accept the print 
+
+lpr /etc/passwd = check the PDF output folder 
+
+lpr -p ENVY-4510 /etc/passwd
+
+lpr -P deskjet-250-series /etc/passwrd 
+
+vewi the jobs = lpq -a 
+
+lpstat -l = check the stuck job
+
+lprm 22
+
+lpq -a
+
+lpadmin -x printer_name = remove the printerss
+
+lpstat -s = chec the sytatus 
+
+cupsreject envy-4510 
+cupsdisable envy-4510 
+
+###109: Networking Fundamentals###
+
+
+##109.1 Fundamentals of Internet Protocols##
+
+#Networking Fundamentals#
+
+
+This lesson will introduce you to the protocols responsible for sending data across networks. 
+We will discuss TCP, UDP, and ICMP. In addition, we will explore the different classes of IP addresses. 
+It is recommended that you review the Basic Networking lesson in the LPI Linux Essentials course prior to viewing this lesson.
+
+Correction: RFC 1918 covers private IP ranges
+
+internet protocol = give the IP to connected 
+
+two major version 
+
+Ipv4 four octate no bw 0.255
+
+ipv6 : 128 bit hexadecimal 
+
+TCP : trasmission control protocol 
+
+work on 3 way hand shake 
+
+udp : user data gram protocol 
+
+there no ask required
+
+ex. dns , icmp (ping, traceroute
+
+network mask 
+
+range : cidr 255.0.0.0/8 , 255.255.0.0/16 , 255.255.255.0/24
+
+private range 
+
+10.0.0.0 - 10.255.255.255
+172.16.0.0 - 172.31.255.255
+192.168.0.0 - 192.168.255.255
+
+#Common Networking Services#
+
+This is a short lesson that lists the common networking services that you need to memorize for the LPIC-1 exam. 
+Download the slide deck from the Downloads section of this course and make sure to memorize the entire list prior to taking the exam.
+
+common network serivce 
+
+/etc/service = look at every service used the port and protocal 
+
+try look at the port , protcol , service chart 
+
+##109.2 Persistent Network Configuration##
+
+#NetworkManager#
+
+NetworkManager is the de facto toolset for administering networking connections on modern Linux distributions. 
+In this lesson, we will discuss the nmcli command line utility for NetworkManager and learn how to add and remove connections. 
+We will also explore the versatile ip command and modify our system's hostname with the hostnamectl command.
+
+-> nmcli = The network manager command line interface, this is the command line utility used for configure network device and their connecttion settings
+
+-> nmlci dev = thsi is short for device which is the physical h/w (such as s network interface card) that we use toconnect to a network
+
+-> nmcli con  = this is short of connection which contains the network configuration settings assigned to  particluar device. we asign pur ip address and DNS settings to a connection.
+
+nmcli dev show 
+
+Network device naming : -
+
+en = ethernet, wi = wireless 
+the new naming scheme(in order)
+en'o'1=for 'O'NBOARD device, index provided by BIOS or firmware
+en's'1 = for devices in Pc1 express hotplug 'S'LOT, index provided by BIOS or firmware
+en'p'2s0=fior device in specific 'P'HYSICAL location 
+(p=bus, s=sloct)
+enx6a0002f08820 - device name including MAC address, not used by default
+eth0 - older, traditional naming
+
+nmlci con show
+
+nmcli con down "wired connection 1"
+
+nmcli con show 
+
+nmcli device status 
+
+nmcli con up "wired connection 1"
+
+nmlci device status 
+
+nmcli connection delete "wirted connection 1"
+
+nmcli con show 
+
+nmcli dev show ens11
+
+nmcli con add con-name "backup" type ethernet
+
+ip4 192.168.122.75/24 gw4 192.168.122.1 ifname ens11 autoconnect 
+
+nmcli con show
+
+nmcli con edit = propmt to fill 
+
+nmcli con show backup = check ipv4 
+
+no dns 
+
+assign dns 
+
+nmcli con mod backup ipv4.dns "192.168.122.1"
+
+verify 
+
+nmcli -f ipv4.dns con show backup
+
+ip addr show 
+
+ip route show 
+
+ip addr add 192.168.122.76/24 dev ens11
+
+ip addr show ens11
+
+ip addr del 192.168.122.75/24 dev ens11
+
+ip addr show 
+
+ip link set ens11 down 
+
+ip link set ens11 up 
+
+ip addr show ens11
+
+ip route add default vis 192.168.122.2 dev eth0
+
+ip route del default via 192.168.122.1 dev eth0
+
+ip route show 
+
+hostnamectl set-hostname "centos7"
+
+hostname 
+
+#Legacy Networking Tools#
+
+Now we will take a look at the legacy networking tools that come with the net-tools package. 
+These include the ifconfig, ifup, ifdown, and route commands. 
+We will learn how to use these commands to view our network connections and modify them.
+
+yum -y install net-tool
+
+ifconfig
+
+ifconfig eth0 192.168.122.250
+
+ifconfig eth0
+
+above is temproty 
+
+ifdown eth0 
+
+ifup eth0 
+
+ifcondig eth0
+
+route
+
+route del default 
+
+route -n 
+
+route add default  gw 192.168.122.1
+
+route add -net 192.168.10.0 netmask 255.255.255.0 gw 192.168.122.25
+
+route -n
+
+##109.3 Basic Network Troubleshooting##
+
+
+#Testing Connectivity#
+
+This lesson focuses on the ping, traceroute, and tracepath commands for verifying our system's connectivity. 
+We will learn about the differences between each command and how to utilize them for both IPv4 and IPv6 connections. 
+We will also use the older netstat command and newer ss command to view the network ports that our systems are using.
+
+ping 127.0.0.1
+
+ping -c 5 192.168.122.1
+ping -c 5 10.0.10.1
+
+ping -4 -c 2 127.0.0.1
+
+ping -6 -c 3 ::1
+
+traceroute 127.0.0.1
+
+traceroute 192.168.122.1
+
+traceroute 8.8.8.8
+
+traceroute 8.8.8.8 = disconnect the network and check the output
+
+!N = network was not reachable
+
+traceroute -T google.com = to make a connection 
+
+traceroute -6 ::1
+
+traceroute6 ::1
+
+tracepath = is replacement of traceroute command and its uses a UDP 
+
+tracepath 192.168.122.1
+
+tracepath google.com = may be u will get the no reply becasue some of router UDP not allowed doesnt mean google not reachable
+
+tracepath6 ::1
+
+nestat = is deprecated with net-tool package and you may need to install
+
+netstat = will show lots of output
+
+netstat -tl = for TCP 
+
+netstat -ul = for udp
+
+netstat -tulp
+
+netstat -r 
+
+now moder command 
+
+ss = socket stattistic
+
+ss -tl
+
+##109.4 Configure Client-Side DNS##
+
+#The Basics of DNS Resolution from Linux#
+
+DNS is an important aspect of working with systems on a network. 
+We use DNS to translate system hostnames to IP addresses so that our computers know how to communicate with each other. 
+In this lesson, we'll learn about the configuration files that we use in Linux for DNS and hostname resolution, 
+such as /etc/hosts, /etc/resolv.conf, /etc/hostname, and /etc/nsswitch.conf. 
+We will also look at how to query DNS and our local systems to resolve a hostname to an IP address using command line tools such as dig, host, and getent.
+
+-> cat /etc/hosts = a text file that will contain the localhost entry mapped to the loopback address (both ipv4 and ipv6). this file can also be used to map other hostname to ip address 
+
+-> cat /etc/hostname = system will use this file for a omputer hostname. the hostnamectl file will write system new hostname to this file.
+
+ping -c 1 host_name 
+
+ip addr show eth0
+
+-> cat /etc/rsolve.conf = this file contains the ip address of dns name servers that the host will use for name resolution.
+
+-> less /etc/nsswitch.conf = among other taks, this file is used to determin the order in which name resolution occure
+
+-> host = this command is used to resolve domain name to ip address 
+
+-> dig = this command is used to query DNS server for partucular types of dns records 
+
+-> getent = this command direclty query the /etc/nsswitch.conf file and its corresponding database locations for information.
+
+
+yum -y install bind-utils = to install the DNS for query
+
+host localhost 
+
+host google.com
+
+dig google.com = its provide bit more info 
+
+dig @8.8.8.8 google.com
+
+dig -t mx google.com
+
+dig @8.8.4.4 -t A google.com
+
+dig -t any google.com | less
+
+getent hosts 
+
+###110: Security###
+
+##110.1 Perform Security Administration Tasks##
+
+#Determine the Current Security State of a System#
+
+In this lesson, we will learn about some of the basic commands that you can use to perform a local security audit on a host. 
+We'll discuss how to use the lsof, w, who, last, and find commands to set up basic system security. 
+We will also look into how to give a user elevated privileges with the sudo command.
+
+-> who = list out the currently logged in users on a system 
+
+-> w = this ommand will also list the currently logged in users, but can also show what process they are current;y running.
+
+-> last = this command shows a listing of users who were logged into the system (but are now logged out).
+to find out what users had failed login attempts, use:
+
+-> last -f /var/log/btmp
+
+who 
+
+w 
+
+last = list all users how logged in
+
+last | head 
+
+last -f /var/log/btmp 
+
+->lsof = this command can be used to determine what files are currently opened on the system. Also. network ports are considered files in linux,
+so opend network ports can be found with this command as well.
+
+lsof 
+lsop | less = shows the open file and folder with ports
+
+lsof -u uer_name 
+
+lsof /home/uer_name | less
+
+-> find = the find comand can be used to locate all fules that have the SUID or SGID bit sent on them 
+
+find / -perm -u+s
+
+-> ulimit = this command can be used to set limits on the amount of resourves in a system that a users can utilize 
+
+-> chage = chage the users password expiration information, Riview section 107.1 in this courcse if you need to.
+
+-> passwd = this command sets a users password. Review ection 107.1 in this couser if you need.
+
+find / -perm -u+s = search will entire file sysrem looking for set UID 
+
+find / -perm -o4000 = search will entire file sysyetm 
+
+find / -perm -g+s
+
+ulimit -a = current set limit of resourcs 
+
+ulimit -m 2048 
+
+ulimit -a 
+
+above change will lost once system will boot up 
+
+cim /etc/security/limits.conf
+
+set the limit permanently 
+
+add user now in file in the end
+
+kenny    hard memlock   2048
+@engineringGroup  - maxlogins 2
+
+kenny soft cpu 150 
+
+kenny hard cpu 200
+
+-> /etc/sudoers = the default configuration file for configuraing users and /or groups that are granted eleveted privilages, Use the visudo command to edit this file.
+
+->sudo = the sudo command allows a user to run a command as root or as another user. this command us typically applied to a user or group to allow eleated privillage
+
+-> su = the substitue user cmmand. provided a dash (-) to assume a longin shell of the specified user, if no user is spesified, the root user is assumed
+
+visodo 
+
+% sign for group 
+
+groups kenny
+
+su - kenny 
+
+if you want to perform the root privillag action use sudo if users added in the sudoers file
+
+#Checking Local Network Security#
+
+In this lesson, we'll take another look at the lsof, netstat, and ss commands to view our active network ports. 
+We will also discuss how to use the fuser and nmap commands to check the status of running network services. 
+These commands are helpful for monitoring your system's network security.
+
+-> lsof = view open file in thet syatem 
+-> lsof -i 
+-> fuser = this comand can be used to list all PID tht are asigned to a partular file or network port that i in use
+
+lsof -i = show the port and process ID fo each file
+
+fuser 22/tcp = 
+
+-> netstat, ss (-t, -u, -n, -a )
+-> nmap = the network map command is used to scan a host for open ports and devices
+
+netstat -tuna
+
+nmap 
+
+yum -y install nmap 
+
+nmap localhost 
+
+##110.2 Set Up Host Security##
+
+#Securing Local Logins#
+
+This lesson will review permission information for the main account configuration files. 
+We will also learn how to completely lock down a user's account with the usermod command and the nologin binary.
+
+Keep local account safe :-
+
+-> /etc/nologin = this file can be used to display a message on the console when someone attemps to log in with an account that is using the /sbin/nologin
+-> /etc/passwd = this file contains the main account configuration details of the uers on the system.
+-> /etc/shadow = this file stores the encrypted password and password age information for the users on the system.
+
+usermod -L usr_name = lock user 
+
+usermod -e 1 user_name = lcok user 
+
+getnet shadow user_name = see in the begning '!' means user account locked 
+
+getent passwd user_name 
+
+usemod -s /sbin/nologin user_name 
+
+getent passwd user_name
+
+check by login with abve users = will not work 
+
+enable user now 
+
+usermod -e "" user_name
+
+try to login now 
+
+will not work cause /sbin/nologin has been setup 
+
+vim /etc/nologin
+
+go away. nothign here 
+
+save it 
+
+now try to logn will same but will get mesage which we etup
+
+usermod -s /bin/bash user_name 
+
+ls -l /etc/passwd
+
+ls -l /etc/shadow
+
+ls -l /bin/passwd
+
+#Securing Network Services#
+
+In this lesson, we'll take a look at some techniques that we can use to help secure our network services. 
+We will discuss using the older xinetd super-server, as well as the modern systemd.socket unit type. 
+We will also look into how we can add an extra layer of security with TCP wrappers.
+
+-> xinetd = the "syuper-daemon". the xinetd daemon controls acess to various netwowk services 
+
+-> TCP Wrappers = this functionlity utilities a hosts.allow and/or a hosts.deny file to determin access to network services 
+
+-> systemd.socket = A sustemd socket unit file is used in place of xinetd on modern Linux distro. thsi type of unit will allwo for on-demand activation of network services. TCP wrappers can be used in conjuction with systemd socket units.
+
+lsof -i 
+
+service cups stop = stop the servics which are not in use
+
+lsof -l 
+
+yum -y install inetd 
+
+vim /etc/xinetd.conf
+
+ls /etc/xinetd.d
+
+yum -y install telnet-server telnet
+
+vim /etc/xinetd.d/telnet = look at top of the file
+
+even though we have installed the telnet it will untill we make the change in conf file "disable = no"
+
+/etc/init.d/xinetd start = start the services 
+
+chkconfig --list --type xinetd
+
+lsof -i 
+
+telnet localhist 
+
+user_account to kogin 
+
+lsof -i = see the user connection for telnet 
+
+exit 
+
+ls /etc = look for tcp wrapper 
+
+vim /etc/host.allow 
+
+in.telnetd : 192.168.122.1
+
+save and close and reset the servies 
+
+service xinetd restart 
+
+telnet 192.168.122.222 = from remote compueter
+
+gor for deny file now 
+
+vim /etc/host.deny 
+
+in.telnetd : 192.168.122.1
+
+service xinetd restart 
+
+from cleint terminal try now 
+
+telnet 192.168.122.222 = from remote compueter deny now 
+
+vim /etc/host.deny 
+
+in.telnetd : 192.168.122.1
+
+All : All = it will deny access all the services from all the network 
+
+ssh useer@192.168.122.222 = uer locked remotely 
+
+remove the last file from anbove 
+
+im /etc/host.deny 
+
+in.telnetd : 192.168.122.1
+
+save it 
+
+ssh useer@192.168.122.222 = now working 
+
+cat /usr/lib/systemd/system/sshd/socket
+
+systemctl stop sshd.service 
+
+systemctl start sshd.service
+
+systemctl status sshd.socket
+
+lsof -i 
+
+make a connection from anothr computer 
+
+ssh user@192.168.122.222
+
+syetemctl status sshd.socket
+
+will see once connectd accepted 
+
+lsof -i 
+
+u will see the same establsied connection s
+
+
+###110.3 Securing Data with Encryption###
+
+#GPG#
+
+In this lesson, we will learn how to encrypt and decrypt files using GPG. 
+We'll go over how to create public keys to send to other users so that they can unlock the files you send them. 
+We will also discuss entropy and random number generation.
+
+gpg = gnu pivacy gurad application that we can used to encrypt the file 
+
+-> gpg = This command if used to egenrate, list, import, and revoke gpg keys.
+
+-> gpg = gpg --gen-key , --export , --import , -- list-keys , -e <file name> , <file name>
+
+-> ~/.gnupg = hidden dir within each user home folder tht contains the gpg keyrings and configuration files for GPG Keys
+
+below is not a part of exam however this is real scenario 
+
+sudo yum -y install rng-tools
+
+sudo systemctl start rngd.service
+
+gpg --gen-key
+
+go default selection to generte the key
+
+you have to enter passphrase if some get the public passphrase will protect just like MFA.
+
+gpp --list-keys = check the status 
+
+now going to creata public key to handover to anyone who will have access on the encrupted file 
+
+gpg -o user_name_publickey --export 16FECFF5 = (16FECFF5 = created while creatingt a private key by gpg --gen-key)
+
+ls -l = see the public key 
+
+mail -s "here is ur key" -a user_name_public user@localhost
+
+check the public key send from kenny accoutn 
+
+mutt 
+
+v = to see atta
+
+s = save 
+
+q quite
+
+ls = check public key has been saved on user profile 
+
+we have to import this key into key rings in orer to use 
+
+gpg --import user-name_public 
+
+goket kenny user account 
+
+ls = check the public key and import into key rings 
+
+gpg --import-key user_name-Public (or key name)
+
+gpg --list-keys = check both the key 
+
+not encriypt the file 
+
+cd /etc/passwd
+
+ls 
+
+
+gpg -r "user name" -e passwd = (-e = file name )
+
+press y 
+
+ls 
+
+new file .gpg extension 
+
+mail -s "hangout thso " -a passwd.gpg user@lcalhost
+
+type message here
+
+switch to another user
+
+gpg --import user_name_publickey
+
+no open the mutt email client 
+
+mutt
+
+view and same the atta
+
+ls = see the file 
+
+now try to decrypt the file 
+
+gpg passwd.gpg
+
+type the passpharee key 
+
+now file is decripted 
+
+cd passwd
+
+if you public key is compremised we can go for "revocation to create a new public key 
+
+gpg --list-keys
+
+gpg -a -o revokae.asc --gen-revoke user_refeance_ID_from_list
+
+go for option to fill and get the key 
+
+gpg --mport revoke.asc
+
+gpg --list-keys
+
+gpg --keyserver pgp.edu --send-keys key_id_refreence_no
+
+
+#SSH#
+
+The secure shell is one of the most important tools for a Linux system administrator. 
+In this lesson, we'll learn about the various files that you need to know about with the secure shell, as well as how to initiate different types of connections. 
+We will go over an example of key-based authentication and discuss how to open up a remote graphical window from another system on your local computer.
+
+-> ssh = the secure shell command. this allows us to make secure, ecncrypt connections to remote system.
+
+-> ssh-copy-id = this command will copy our public ssh key to another system, and set up the proper permission for the authorized_key file on the remote host.
+
+-> ssh-agent = this command acts as a wrapper around an environment so that it can handle authentication for key files that use passphrase.
+
+-> ssh-add = this command adds the passphrase to ssh-agent
+
+cd /etc/ssh
+
+ls -l
+
+vi sshd_conf = see the host key file
+
+ls -ld .ssh
+
+cd .ssh
+
+ls -l = file is empty 
+
+ssh user@remoteip
+
+it will ask for finger print to accept 
+
+press yes to login 
+
+exit and now see the ssh hidden file which was empty 
+
+ls -l = one ket got added while ssh above , now open that file 
+
+cat known_hosts = (known_host form remote )
+
+if you are not able to login delete that key and accpet new ssh key from remote as a troubleshoot in case key change will work 
+
+as of now we were using password to login, now lets try to use key to login 
+
+ssh-keygen = this comamnd will generate by default 2048 bit long key if you want another one try below 
+
+ssh-keygen -b 1024 -t DSA = lets try command one 
+
+ssh-keygen = will prompt for store once you will hot enter it saved into .ssh hidden folder 
+
+provide passphrase key once done you will have key generted 
+
+ls -al = check the key , you will see below file
+
+id_rsa
+id_rsa.pub 
+
+ssh-copy-id = will setup a secure on remopte 
+
+ssh-copy-id user@remoteip = once copy command completed will logn back to locla computer
+
+ssh user@remoteip
+ 
+it will ask you for passphare now to login 
+
+back to local host
+
+ssh-agent bash = we are in now new shell with agent wrapper
+
+ssh-add
+
+prompt fo passphrase 
+
+ssh user@remoteip = direct login , it will only work for bash shell
+
+cat .ssh/authorized_keys = this file crated file ssh-copy command 
+
+ls -l .ssh/authorized_key = check the permisiin 
+
+exit from remote system 
+
+login in X11
+
+ssh -Y user@remoteip
+
+xclock = to run x11 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
