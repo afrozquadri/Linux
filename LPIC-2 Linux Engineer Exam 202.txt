@@ -1,0 +1,122 @@
+Introduction to LPIC-2 and the Exam
+
+Topic 207: Domain Name Server
+
+
+######Lecture: 207.1 - Basic DNS Server Configuration (DNS Client Configuration and Terms)##########
+
+cat /etc/resolv.conf
+
+nslookup = name service lookup
+
+nslookup not installed then installed it 
+
+yum provide nslookup
+
+yum install bind-utils = 
+
+nslookup www
+
+nslookup www.microsoft.com
+
+root server = end point (all dns server total in 13)
+
+nslookup www.google.com = called forward lookup 
+
+nslookup 10.0.0.0 = revers lookup 
+
+#######207.1 - Basic DNS Server Configuration (BIND Installation - Caching Name Server)#######
+
+dns mask = 
+
+powerdns = 
+
+djb dns 
+
+yum install bind bind-utils
+
+cd /etc
+
+vi named.conf
+
+#####207.1 - Basic DNS Server Configuration (BIND Service Start and rndc Command)###
+
+systemctl start named
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
