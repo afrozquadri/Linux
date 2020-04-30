@@ -1,0 +1,2005 @@
+1.
+
+uptime 
+
+yum provides */procs
+
+2.
+
+man iostat
+
+iostat = CPU and disk 
+
+iostat -c = only cpu utilization 
+
+iostat -c -h = human readable formate 
+
+iostat -c 2 5 = for 2 sec and 5 times 
+
+iostat 
+
+df -h 
+
+iostat -d = display only disk
+
+iostat -d 2 5 = run for evry 2 sec and five times 
+
+3. 
+
+man sar = provide info for disk and cpu 
+
+yum provides */sar
+
+sar | head = 
+
+chkconfig sysstat on = enable on reboot 
+
+service sysstat start 
+
+cd /var/log/sa
+
+sar -d = 
+
+ls -l /dev | grep "devicename, *" = same from df -h about the device name 
+
+4. 
+
+for memory =
+
+free = display the memory of physcial and swap memory 
+
+man free
+
+free
+
+free -m = in MB -g parameter for GB
+
+free -h = human readable 
+
+free -h -s 5 = over five sec
+
+5.
+
+man vmstat
+
+vmstat = give info for everything 
+
+
+vmstat -a = active and inactive memory 
+
+
+vmstat 5 = every 5 sec
+
+vmstat 6 -t = evey 6 sec with time stamp
+
+vmstat -s = details info
+
+while true; do vmstat -s; sleep 5; done 
+
+6. 
+
+lsof = open file in the system 
+
+man lsof 
+
+**** Linux treat everyting in files and folders *****
+
+losf | head -10 = top 10 file 
+
+lsof | wc -l = see by line
+
+lsof -u user = only runnign by user
+
+lsof -u user | wc -l 
+
+lsof -u user  | wc -l | head -10
+
+7.
+
+ps = current sessiom 
+
+tty = terminal to log on 
+
+ps -e = all process 
+
+ps -ef = evryting running on the system 
+
+ps -ef | grep rsyslog = 
+
+pstree = perent and chile process visual view 
+
+pstree -A = 
+
+pstree -G
+
+pstree -h
+
+pstree -h -p = process id accosiate with it 
+
+
+pstree -s -p -Z 
+
+pstree -h -p -a = in visual manner 
+
+top = interactive listing and refresh evrything on 3 sec
+
+m = memory 
+
+c = 
+
+t= task  
+
+l =  load avarage 
+
+f = other view 
+
+p = 
+
+v = return key 
+
+o = change order
+
+shift+r = 
+
+n = top process like n 5
+
+d change the interval or update 
+
+k = kill proces  by pressing pid number 
+
+top = pass the signal to kill the signal or process 
+
+q = exit 
+
+8. 
+
+netstat = bandiwdht utilization network utliztion connetivve many mroe 
+
+man nestat = check it 
+
+netstat -r = routing table 
+
+netstat -s = evryting about the network from protocal perspetive 
+
+netstat -l | more  = 
+
+netstat -lt | more = tcp socket 
+
+netsta -ltu | more = tcp and udp socket 
+
+netstat -lntu | more = dont rever dns lookup 
+
+netstat -cltu | more = 
+
+netstat -cltup | more = 
+
+netstat -p | more = list everything 
+
+9.
+
+user info
+
+man w 
+
+w 
+
+w -s = more presice info 
+
+w user_name 
+
+10.
+
+iotop = disk usage info very similar to top 
+
+
+htop = 
+
+nestat replaced by ss 
+
+ss 
+
+iptraf = like wireshar tool for netwrok 
+
+
+11. 
+
+collectd = gathering system statics 
+
+apt-get install collectd 
+
+cd /etc/collectd = contain the config and plugins contains 
+
+
+vi /etc/collectd 
+
+12.
+
+configure the collection 
+
+service collectd start 
+
+cd /usr/share/collectd 
+
+ll
+
+cat types.db 
+
+
+cat types.db | grep cpu 
+
+
+cd /var/log/collectd
+
+cat /etc/collected/collected.conf | grep rrd 
+
+cd rrd 
+
+ll
+
+
+13.
+
+apt-get install lighttpd git php5 php-cgi
+
+uncomment cgi 
+
+sudo lighttpd-enable-mode fastcgi 
+
+ok 
+
+ok
+
+service lighttpd restart 
+
+http//
+
+cd /var/www
+
+ll
+
+git clone http:// "this is in study guid.
+
+get the graphical info about the resource utlization 
+
+14.
+
+monitoring tool 
+
+nagios ,  mrtg , cacti (open source, entrprise etx.)
+
+
+15.
+
+icinga = monitorting tool
+( same as nagios) extended version 
+
+********Kernal Component ( next module )***********
+
+1. 
+
+kernel tree [2.x & 3.x]
+
+uname -a = 
+
+cd /usr/src/
+
+ll
+
+cd kernels 
+
+ll
+
+cd ..
+
+yum install kernel-devel = full kernel source 
+
+
+cd kernels
+
+ll
+
+uname -a 
+
+cd kernel_version from abive 
+
+ll
+
+cd /usr/src/doc
+
+ls -la k* = kernel docs
+
+cd kernel-
+
+cd kernel-doc-.2.6.32/
+
+ll
+
+cd docuemtn/
+
+ll
+
+now its time to see 3.x
+
+uname -a 
+
+apt-get source link-image-$(uname -r)
+
+cd /usr/src
+
+ll
+
+cd linux-headr*
+
+makefile = inportant 
+
+201.1 -1 >>><<<<
+
+cd /boot 
+
+ll
+
+bgimage compress file for kernel to load into memory 
+
+gimage compree file for kernel to load into memeory 
+
+gzip and bzip used for kernel compression 
+
+201.2 =====<<<<>>>>>
+
+Kernel 4.x = xz utility compression 
+ 
+yum groupinstall "devlopment tools"
+
+yum install ncurses-devel qt-devel ---- logn command to (build the configuretion ) check it 
+
+cd /usr/src/kernels
+
+ll
+
+cd 2.6.32-XX = soruce code for kernel 
+
+ll
+
+once you have everything installed now its time to begin the own kertnel installation.
+
+apt-get install make gcc libcurses5-dev = in ubuntu 
+
+apt-get build-dep linux-image-$)uname -r)
+
+****<<<>>>>make = actual utility for compile the kernal to make the file <<<<>>>
+
+
+cd /usr/src/
+
+ll
+
+cd /into available dir 
+
+look for makefile****
+
+make distclean = remove everything 
+
+make mrproper = delete the corent confirn and create  new one 
+
+
+make clean = delete most file nad leave enough file to compile the kernel 
+
+201.1=====>>>><<<<<<< Compiling a Kernel (2.6.x/3.x General Kernel Compilation Process)
+
+going to compile the kernel 
+
+cd /usr/src
+
+ll
+
+cat makefile = containe the file to build the kernal all necessary info 
+
+make clean 
+
+make menuconfig 
+
+cat .config
+
+cp .config /root/original.kernel.config
+
+make xconfig or make gconfig = in our case or most case 
+
+make menuconfig
+
+make bzImage = build kernel environemtn 
+
+now it time to make modile 
+
+make modules 
+
+*above all hepeing on /usr/src/kernel_location
+
+compile process takes almost 4 hors depends on the module which we install
+
+make modules-install = prepare to  install for thsi kernel (not correct command below is correbt one 
+
+cat Makefile |grep modules = check the file 
+
+make modules_install
+
+cd arch/
+
+ll
+
+cd x_86_64/
+
+./
+
+../
+
+../../x86/boot/bzImage
+
+cd..
+
+cd..
+
+go back to x86 location 
+
+cd /boot
+
+ls -al bzImgage
+
+mv bzImage /boot/vmlinuz-3.13.0-36.x_86_64 
+
+cd /boot
+
+ll
+
+mv vmlinuz-3.13.0-36 vmlinuz-3.13.0-36-1.x86_64
+
+ll
+
+mkinitrd /boot/initrd-3.13.0-36-1.img 3.13.0-26-1
+
+mkinitrmfs -o /boot/initrd-3.13.0-36-1.img 3.13.0-36-1
+
+ll
+
+###201.3 - Kernel Runtime Management and Troubleshooting (LKM- Loadable Kernel Modules)###
+
+man uname 
+
+uname -a 
+
+uname -s 
+
+uname -n 
+
+uname -r
+
+uname -v
+
+uname -m
+
+uname -p 
+
+uname -i
+
+uname -o
+
+cd /lib/moudles
+
+ll
+
+uname -r 
+
+cd /kerlnakle_name 
+
+cd kernel 
+
+ll
+
+cd sound 
+
+ll
+
+
+ko = kernel objet 
+
+###201.3 - Kernel Runtime Management and Troubleshooting (depmod and modules.dep)##
+
+cd /lib/modiles 
+
+ll
+
+man depmod 
+
+ll
+
+cd /open_kernel_version
+
+depmod 
+
+cat depmod 
+
+map = is file to interact with kernel and h/w
+
+cat modules.pci | more 
+
+above are happinh uder Kernel file 
+
+##201.3 - Kernel Runtime Management and Troubleshooting (Listing, Adding and Removing Modules)###
+
+lsmod = loaded modules 
+
+lsmode | grep lp 
+
+man rmmod = remove module 
+
+remod lp = remove lp module 
+
+
+lsmod | grep lp = noting cause removed 
+
+man insmod
+
+ismod lp 
+
+man modinfo = show info about the kernel mod 
+
+modinfo lp
+
+insmode use_the-path_from_above_comd to installed lp
+
+lsmod | grep lp
+
+modinfo lp 
+
+modprobe lp = 
+
+modprobe lp reset=1
+
+lsmod | grep lp
+
+lsmod 
+
+cd /etc/modprobe.d
+
+ll
+
+cat dist.conf	
+
+###Kernel Runtime Management and Troubleshooting (Viewing and Changing Kernel Parameters in /proc/sys and Using sysctl)###
+
+cd /proc/sys   = everythibg in linux treaed as files and folder 
+
+ll
+
+cd kernel
+
+cat thread-max
+
+cd..
+
+ll
+
+
+cd dev/
+
+ll
+
+cd parpot 
+
+ll
+
+cd default 
+
+ll
+
+
+car spintime 
+
+cat "550" > spintime
+
+echi "500-" > spintime 
+
+cat spintime 
+
+man sysctl 
+
+
+sysctl -a = all kernel device configuration 
+
+
+sysctl -a | grep parpofrt 
+
+
+sysctl dev.parport.default.spintime =  560 
+
+sysctl -a | grep parport 
+
+cd etc/
+
+vim sysctl.conf = make permanet vaule post reboot  even.
+
+###201.3 - Kernel Runtime Management and Troubleshooting (Displaying Information About System Hardware)###
+
+lspci = all h/w info 
+
+man lspci 
+
+lspci -v 
+
+lspci -vvv = evrything connected to device 
+
+lspci -k = device and system 
+
+man lsdev 
+
+cd /proc ls -al io*
+
+lsdev 
+
+lsusb 
+
+cd var/log
+
+go to syslog 
+
+##201.3 - Kernel Runtime Management and Troubleshooting (The Device Filesystem - udev)##
+
+cd /dev
+
+ll
+
+cd /etc/udev/rules.d
+
+ll
+
+cat open_rule 
+
+udevmonitor = prevous kernel 
+
+udevadmn monitor 
+
+Topic 202: System Startup---------<<<<<>>>>>>>
+
+202.1 - Customizing a SysV-Init System Startup (LSB - Linux Standard Base Specification)
+
+lsb = linux standard base 
+
+###Customizing a SysV-Init System Startup (SysVInit Boot Process)####
+
+ps aux | grep init 
+
+check runlevel in study guid 
+
+
+cat /etc/init = check run level 
+
+cd /etc/rc.d
+
+ll
+
+head rc.sysinit
+
+cd /etc
+
+ls -al rc
+
+cd rc3.d/
+
+echo $runlevel
+
+ls -al rc 
+
+pwd 
+
+ll
+
+ls -al rc
+
+ll
+
+cd rc2.d
+
+ll
+
+###202.1 - Customizing a SysV-Init System Startup (/etc/init.d and Modifying Runlevel Scripts - Debian/Ubuntu)###
+
+cd /etc/init.d
+
+ll
+
+/etc/init.d/sshd restart 
+
+/etc/init.d/ssh restart
+
+man update-rc
+
+cd /etc/rc2.d
+
+cd /ec/init.d
+
+ls -al | more
+
+ls -al bluetooth
+
+update-rc.d bluetooth start 85 5 . stop 85 6 .
+
+update-rc.d bluetooth remove
+
+cd /etc/rc5.d
+
+ll
+
+check the bluetooth run level 
+
+##202.1 - Customizing a SysV-Init System Startup (/etc/init.d and Modifying Runlevel Scripts - Red Hat/CentOS)##
+
+cd /etc/init.d = 
+
+ll
+
+cd /etc/rc.d
+
+ll 
+
+cd /etc/init.d
+
+ll
+
+ls -al /etc/rc.d/rc2.d
+
+vim sshd
+
+see chkconfig
+
+
+ls -al /etc/rc.d/rc3.d
+
+see sshd 
+
+ll
+
+vim ipbtable 
+
+chkconfig = see this config 
+
+dp the modification on config for startup 
+
+chkconfig --add ip6table 
+
+cd /etc/rc.d/rc2.d
+
+ll
+
+see the ip6table now 
+
+chkconfig --list 
+
+see the service with run level on and off 
+
+chkconfig ip6table off 
+
+chkconfig --list 
+
+see up6table now 
+
+chkconfig ip6table --level 3 on 
+
+chkconfig --list = now run on elvel 3 
+
+##-202.1 - Customizing a SysV-Init System Startup (Changing Runlevels)
+
+runlevel 
+
+man runlevel 
+
+
+man init 
+
+init 6 = reboot 
+
+man tekinit
+
+telinit -t 10 6 
+
+##202.1 - Customizing System Startup (systemd and systemd targets)
+
+systemd is an init system similar to sysVinit
+
+service httpd start 
+
+systectl start httpd
+
+systemctl status sshd
+
+// /etc/systemd/system/default.target 
+
+ll /etc/systemd/system/muliti-user.target.wants/
+
+ll /usr/lib/sytemd/system/nfs-cleuint.target
+
+cat /usr/lib/sytemd/system/nfs-cleuint.target
+
+cat /user/lib/systemd/system/sshd.service
+
+##202.2 - System Recovery (Understanding the Boot Process)
+
+cd /boot 
+
+ls or ll
+
+top
+
+202.2 - System Recovery (GRUB - Legacy Bootloader)
+
+login to centos5 = this legecy 
+
+cd /boot 
+
+ll
+
+*******boot parition can not be LVM or RAID 
+
+df -h
+
+
+cd grub
+
+ll
+
+vim grub.conf
+
+we can chnage the root password by going on singal mode from startup.
+
+cd /boot/grub
+
+cd..
+
+ll
+
+we an make sceond enrty on grub for second kernel to boot from 
+
+grub-md5-crypt
+
+type the password 
+
+use that password to grub config 
+
+###202.2 - System Recovery (GRUB 2 - Modern Bootloader)
+
+cd /boot/grub2
+
+ll
+
+cd..
+
+ll = older gurb 
+
+ls init*
+
+uname --a 
+
+cd /boot
+
+cd grub2
+
+ll
+
+vim grub.config
+
+cd /etc/default
+
+ll
+
+vim grub 
+
+cd /etc/grub.d
+
+vim /boot/grub2/grub.cnf
+
+cd /etc/grub.d
+
+##202.2 - System Recovery (Filesystem Recovery - fsck)
+
+man fsck 
+
+df -h
+
+umount data (1st unmount the drive which you want to check )
+
+umount drive_name 
+
+df -h 
+
+cat /etc/fstab
+
+fsck /dev/drive_name 
+
+man fsck 
+
+fsck -y /dev/drive_name
+
+## 202.2 - System Recovery (systemd rescue and emergency Modes)
+
+go to rescue mode from boot menu and login to shell to check gthe fstab if system not booting up.
+
+mount = see 
+
+mount -o remount,rw /
+
+
+##202.2 - System Recovery (UEFI and NVMe)
+
+
+
+## Alternate Bootloaders (Awareness of LILO, Syslinux, EXTLinux, ISOLinux, PXELinux)
+
+
+
+##Topic 203: Filesystem and Devices##
+
+203.1 - Operating the Linux Filesystem (Displaying Filesystem Mounting Information)
+
+Candidates should be able to properly configure and navigate the standard Linux filesystem. 
+This objective includes configuring and mounting various filesystem types.
+
+man mount 
+
+mount = 
+
+df -h 
+
+cd /etc/mtab 
+
+cd /etc/
+
+more mtab
+
+mount -n 
+
+cd /proc 
+
+cat mounts 
+
+
+203.1 - Operating the Linux Filesystem (Mounting and Unmounting Filesystems Manually)
+
+Candidates should be able to properly configure and navigate the standard Linux filesystem. 
+This objective includes configuring and mounting various filesystem types.
+
+mount 
+
+df -h
+
+man fuser = identify the process 
+
+fuser / = check root dir process 
+
+fuser -k /device/file_system 
+
+
+fuser -v / = 
+
+cd /mnt 
+
+cd /media 
+
+/run = error wil come 
+
+cd /mnt 
+
+ll
+
+mount -t ext3 /dev/cvdj1 /mnt/data
+
+df -h 
+
+cd /data
+
+ll
+
+mount -o remount, ro /mnt/data
+
+echo "hi there" > /mnt/data/test.txt =  error will cause i have change the mount to read only.
+
+mount -o remount, rw /mnt/data
+
+echo "hi there" > /mnt/data/test.txt = data will be written 
+
+##203.1 - Operating the Linux Filesystem (Mounting Filesystems Automatically with /etc/fstab)
+
+Candidates should be able to properly configure and navigate the standard Linux filesystem. 
+This objective includes configuring and mounting various filesystem types.
+
+df -h 
+
+umount /mnt/data
+
+df -h 
+
+man mount = search for -a 
+
+mount -a 
+
+df -h = did not see cause the device not listed on /etc/fstab
+
+vim /etc/fstab
+
+add the device to make permanent entry on fstab file.
+
+mount -a 
+
+man e2label = will allow me to label my drive that i know ony for ext2/3/4
+
+e2label /dev/xvdf1 mydata
+
+change the device from /dev/xvdf1 to LABEL=mydata in fstab 
+
+df -h 
+
+ou may change the label any time and corret in fstab 
+
+blkid = will list all the device attahed to it 
+
+blkid | grep xvdf1
+
+cd /dev/disk/by-
+
+ls -al /dev/disk/by-uuid/
+
+will list out the divice which ae having uuid no.
+
+again u can make change on fstab using uuid 
+
+uuid=UUID_No 
+
+mount -a
+
+vim /etc/fstab 
+
+default = permission important 
+
+man sync
+
+sync = flush file system 
+
+##203.1 - Operating the Linux Filesystem (Swap Space)
+
+swapon -s = active list 
+
+top = check space 
+
+swapoff -a = deactivate all swap file 
+
+##Operating the Linux Filesystem (systemd mount and automount)
+
+systemd mount and umount 
+
+##203.2 - Maintaining a Linux Filesystem (Filesystem Types and Creating Them)
+
+file system :- 
+
+steps to work or asign the drive or mount to 
+
+ 1. assign the disk 
+ 2. check the availbel disk lablk or fdisk -l 
+ 3. make a partion from disk like dev/sdb to /dev/sdb1 
+ 4 we can not run mkfs on disk we have to run the mkfs on partion like /dev/sdb1 
+ 5 formate a disk with mkfs utility 
+  and then assign to it
+
+ 
+check available device = lsblk
+
+make a partion of available device = fdsik /dev/available_Device_Name 
+
+follow along to make partion of it 
+
+fdisk /dev/sdb1 = not /dev/sdb
+
+type p to check partion 
+
+type n to create new parition 
+
+one done formate file system 
+
+mkfs -t ext2/3/4 or xfs /dev/sdb1 
+
+then mount whereever you want 
+
+make it permanent by adding entry on /etc/fstab 
+
+ ##203.2 - Maintaining a Linux Filesystem (Change and View EXT Based Filesystems)
+
+playing about 
+
+dump2fe 
+
+tunee2fs
+
+
+##203.2 - Maintaining a Linux Filesystem (Change and View XFS Based Filesystems)
+
+yum install xfsprogs
+
+xfs_info /dev/sdb1
+
+umount for xfs_repair 
+
+xfs_repair /dev/sdb1
+
+xfs_repair -n /dev/sdb1 
+
+mount the drive now 
+
+xfsdump -f /mnt/mydata/Name_forBackup /mnt/mydata
+
+
+
+
+##203.2 - Maintaining a Linux Filesystem (Overview of SMART and smartd)
+
+
+self monitoring analisys and reporrint technology = SMART ( for drive)
+
+##203.2 - Maintaining a Linux Filesystem (ZFS and Btrfs)
+
+
+
+
+## 203.3 - Creating and Configuring Filesystem Options (Creating Swap Files and Partition
+
+swap - s = list 
+
+swap -a = mount 
+
+two way we can have swap 
+
+in partition or as file 
+
+in partion we create partion and = mkswap /dev/partion_name 
+
+dd if=/dev/zero of=/root/myswapfile bs=1M count=1024
+
+mkswap /root/myswpafile 
+
+mount -s 
+
+mount -a = check now 
+
+##203.3 - Creating and Configuring Filesystem Options (Mounting on a loopback and mkisofs)
+
+##203.3 Creating and Configuring Filesystem Options (Working with LUKS)
+
+Linux unified key setup = encrtnbg disk at rest 
+
+lvdisplay 
+
+yum install cryptsetup -y 
+
+cryptsetup luksFormate /dev/myvol/secret 
+
+YES
+
+entter password = 
+
+crypt lukcopen /dev/myvol/secret mysecratstash
+
+mkfs.xfs /dev/mapper/mysecrretstash
+
+
+** watch this video once again about the locking device as encryption**
+
+
+## Topic 204: Advanced Storage Device Administration##
+
+##204.1 - Configuring RAID (Introduction to RAID Types)##
+
+in exam RAID0/1/5 
+
+in RAID 0 = great performance with striping know for speed ( RR fasion) two drive combine in one device
+
+in RAID 1 = data is written one in one disk another data in another disk.
+
+redundadnt but low on perfomenace , speed two drive combine in one device (mirror)
+
+in RAID 5 = required three or more for ( create parity to rebuild the failure on any group of disk)
+
+##204.1 - Configuring RAID (Preparing Your Devices for Software RAID)##
+
+df -h 
+
+lsblk -l
+
+fdisk -l
+
+create three device and in each three device three parition in each with spesific size with raid sysrtem type.
+
+204.1 - Configuring RAID (Configuring Your RAID Device)
+
+mdadm = managing the RAID software 
+
+mdadm -C /dev/md0 -l raid5 -n 3 /dev/xvdf1 /dev/xvdg1 /dev/xvdj1  -x 3 /dev/xvdf2 /dev/xvdg2 /dev/xvdj2 
+
+
+
+ls -al /dev/md*
+
+mdadm --details /dev/md0 = see the whol details about the RAID5
+
+cat /proc/mdstat = info about the RAID
+
+mdadm --detail --scan --verbose /dev/md0 = 
+
+mdadm --detail --scan --verbose > /etc/mdadm.conf
+
+mkdir /mnt/raid5
+
+mkfs -t ext4 /dev/md0 
+
+mount -t ext4 /dev/md0 /mnt/raid5
+
+df -h
+
+cd /mnt/raid5
+
+ll
+
+mkdir backup 
+
+cp -rf /etc/* 
+
+pwd 
+
+cd ..
+
+vim /tex/fstab
+
+mount the raid devce 
+
+check now 
+
+umount /mnt/raid5/
+
+mount -a 
+
+df -h 
+
+##204.1 - Configuring RAID (Managing Failover and Recovery of RAID Devices)##
+
+
+mdadm --details /dev/md0
+
+mdadm -fail /dev/md0 /dev/xvdg1
+
+mdadm --details /dev/md0
+
+cat /proc/mdstat = check the status of raid 
+
+ls -al /mnt/raid5/back
+
+mdadm --details /dev/md0 
+
+lets fail anoter device 
+
+mdadm --fail /dev/md0 /dev/xvdf1
+
+mdadm --detail /dev/md0
+
+while rebuilding file remains aavailavle thats the beuty of raid 
+
+command and process remain same for raid0 and raid1
+
+ls -al /mnt/raid5/backup
+
+mdadm --fail /dev/md0 /dev/xvdj1
+
+mdadm --detail /dev/md0 
+
+keep checking the rebuilding status 
+
+now all three spare device used if at this time if any device or partion failed it will affect the raid 
+
+now its time to add the additional spare partition to raid 
+
+mdadm --add /dev/md0 /dev/xvdf3
+mdadm --add /dev/md0 /dev/xvdg3
+mdadm --add /dev/md0 /dev/xvdj3
+
+mdadm --detail /dev/md0 
+
+check everything in status 
+
+mdadm --detail --scan -verbose 
+
+cat /etc/mdadm.conf
+
+mdadm --detail --scan -verbose > /etc/mdadm.conf = make permanent change applied post reboot 
+
+##204.2 - Adjusting Storage Device Access (iSCSI Network Storage - Target Configuration)##
+
+install scsi-traget-utils
+
+cd /etc/tgt
+
+ll
+
+vim targets.conf
+
+go the target and configure like below 
+
+<target iqn.2016.12.com.googl.com:myscsi>
+        backing-store /dev/xvdg
+        iniator-address 
+<\target>
+
+save it 
+
+ifconfig 
+
+/etc/init.d/tgt start = come under sysVinit
+
+tgt-admin --show = this will verify the assign information 
+
+##204.2 - Adjusting Storage Device Access (iSCSI Network Storage - Initiator Configuration)##
+
+yum install scsi-initatr-utils 
+
+
+scsiadm -m discovery -t sendtarget -p IP_Address_of_Target
+
+/etc/init.d/scsi restart 
+
+/etc/init.d/scsi status
+
+fdisk -l
+
+fdisk /dev/scsi_device = follow same as we do for traditionl device for formate 
+
+##204.2 - Adjusting Storage Device Access (iSCSI Network Storage - Mounting and Using the Device)##
+
+/etc/init.d/scsi status
+
+df -h
+
+vim /etc/fstab
+
+#204.2 - Adjusting Storage Device Access (NVMe and /dev, SSDs and TRIM)##
+
+
+## 204.3 - Logical Volume Manager (Physical Volume Group Creation)##
+
+pvcreate /dev/xvdf
+
+pvcreate /dev/xvdg
+
+pvdisplay /dev/xvdf
+
+
+##204.3 - Logical Volume Manager (Volume Group Creation)
+
+pvdisplay = show all physical volume
+
+vgcreate VG0 /dev/xvdf /dev/xdg
+
+vgcreate -s 8MB VG0 /dev/xvdf /dev/xdg
+
+vgdisplay 
+
+vgextend VG0 /dev/xvdj
+
+in LVM2 you dont have to create physical volume to add into the exisitng volume group
+
+vgdisplay VG0
+
+vgdisplay -v VG0 = full info
+
+##204.3 - Logical Volume Manager (Logical Volume Group Creation)##
+
+vgdisplay 
+
+lvcreate -L 500M -n mylv0 VG0
+
+cd /dev
+
+ll -al VG0
+
+cd /dev/mapper 
+ll
+
+/dev/mapper/VG0-mylv0
+
+mkdir  /mnt/lvm
+
+mkfs -t ext4 /dev/mapper/VG0-mylv0
+
+mount -t ext4 /dev/mapper/VG0-mylv0 /mnt/lvm
+
+
+cd lvm 
+
+ll
+
+mkdir backup 
+
+cd backup 
+
+cp -rf /etc/* .
+
+lvdisplay 
+
+lvremove mylv0 = umount fist fort this
+
+lvcreate -i -L 500M -
+
+
+
+##204.3 - Logical Volume Manager (LVM Maintenance - Extending, Reducing and Resizing)##
+
+lvdisplay 
+
+df -h
+
+lvextend -L +40GB/dev/mapper/VG0-mylv0
+
+
+df -h
+
+resize2f /dev/mapper/VG0-mylv0
+
+df -h 
+
+ls -al /mnt/lvm/backup 
+
+vgdisplay 
+
+umount /mnt/lvm = 
+
+fsck -f /dev/mapper/VG0-mylv0
+
+resize2f /dev/mapper/VG0-mylv0 500M 
+
+lvreduce -L -40GB /dev/mapper/VG0-mylv0
+
+mount -t ext4 /dev/mapper/VG0-mylv0 /mnt/lvm
+
+df -h
+
+cd /mnt/lvm
+
+ll
+
+
+##204.3 - Logical Volume Manager (LVM Maintenance - Snapshots)##
+
+lvcreate -L 500M -s -n mysnap0 /dev/mapper/VG0-mylv0 
+
+lvdisplay 
+
+cd /dev/
+
+ls -al VG0
+
+cd /mnt
+
+mkdir lvmbackup 
+
+mount -o ro /dev/mapper/VG0-mysnap0 /mnt/lvmbackup
+
+df -h 
+
+cd lvm
+
+ll
+
+cd backup 
+
+ll
+
+rm updatedb.conf
+
+cd ..
+
+ll
+
+cd lvmbackup 
+
+see still updatedb.conf file available cause ro ( read only )
+
+lvremove /dev/mapper/VG0-mysnap0
+
+lvdisplay 
+
+ls -al /dev/VG0 
+
+##204.3 - Logical Volume Manager (lvm.conf)##
+
+cat /etc/lvm/lvm.conf
+
+lvmconfig | grep sysfs_scan
+
+vim /etc/lvm/lvm.conf
+
+/filter
+
+pvscan 
+
+vgscan
+
+
+##Topic 205: Network Configuration##
+
+ifconfig = show active connect 
+
+ifconfig -a = detected interface ethernet 
+
+ifconfig eth1 
+
+ifconfig eth1 192.168.1.100 netmask 255.255.255.0 broadcast 192.168.1.255 = assigning the ip 
+
+ifconfig eth1 = see the configured status
+
+ifconfig = see all connected 
+
+ifconfig eth1 down 
+
+ifgconfig 
+
+ifconfig eth1 up 
+
+ll 
+
+ifconfig 
+
+****the above configruation is persistnce
+
+
+ifconfig eth1 promisc
+
+ifconfig the1 -promisc
+
+ping 192.168.1.100
+
+##205.1 - Basic Networking Configuration (Routing - arp)##
+
+arp = shwos the arm table 
+
+ifconfig 
+
+arp -i eth1
+
+arp -d 192.168.1.100
+
+arp 
+
+ping 192.168.1.100
+
+arp 
+
+arp -v 
+
+##205.1 - Basic Networking Configuration (Overview of the ip tool)##
+
+OLD      VS    NEW  (Commad for new version)
+
+arp            ip neigh 
+
+ifconfig       ip addr
+
+ipmaddr        ip maddr
+
+iptunnel       ip tunnel 
+
+route          ip route 
+
+ip addr add 10.0.0.1/24 dev enp0s9
+
+ip link dev enp0s9 up 
+
+ip a s dev enp0s9
+
+route 
+
+ip route 
+
+arp 
+
+ip neigh 
+
+
+##205.1 - Basic Network Configuration (iw)##
+
+iwconfig = for wireless 
+
+
+## 205.2 - Advanced Network Configuration and Troubleshooting (Viewing Network Activity - netstat, lsof and nc)##
+
+nestat = show the network info on local network interface (netstat alone enough to give evry info )
+
+netstat 
+
+nestat -s
+
+netstat -i = interface summary 
+
+nestat -r = routing table 
+
+netstat -at = summary of TCP 
+
+netstat -au = summary for UDP 
+
+netstat -l = give us socket and asscoiate inode ( conneting problem with sysytem)
+
+lsof = list open file 
+
+lsof -n = dns info 
+
+lsof -n | more = comment associated with it
+
+nc - l 80 ( l = listen)
+
+nc 10.0.0.101 80 ( we can use as client )
+
+nc -k -l 80
+
+nc -u -k -l 80 
+
+nc -w 30 -u -k -l 80  ( w= listed time , u = UDP , l = listed , k= allo wthe rserv to continure lsitedning)
+
+##205.3 - Troubleshooting Network Issues (Troubleshooting and Configuring Network Interfaces)##
+
+ifconfig 
+
+cd /etc/sysconfig/network-scripts =
+
+vim ifcfg-eth0 
+
+vim ifcfg-eth1 = 
+
+DEVICE=eth1
+#TYPE/UUID(optional)/HWADDR
+IPADDR=192.168.1.110
+NETMASK=255.255.255.0
+DBROADCAST=192.168.1.255
+ONBOOT=yes
+BOOTPROTO=none
+
+save file which will make consistance configuration on boot 
+
+service network restart 
+
+##Topic 206: System Maintenance##
+
+#####206.1 Make and Install Programs from Source (Unpack, Configure, Compile and Install)#####
+
+curl -V
+
+yum groupinstall "devlopment-tool" = evrtyihg wil come from curl source code for compile 
+
+mkdir compile 
+
+wget -o curl.tar.gz ( wget and curl these two are used for source compilation )
+
+ll
+
+cd compile 
+
+tar zxvf ../curlfile = see on file 
+
+cat makefile = code maintaner file 
+
+cat configure.ac = librararies/ dependecies dir many more (scan on system what is mising wil stop at there)
+
+ll
+
+cd src = source written here
+
+makeall = default for making header many more for curl 
+
+ls -al curl8 ( in curl dir)
+
+./curl -V 
+
+curl -V
+
+make install = install curl 
+
+cuerl -V
+
+which curl 
+
+#####206.1 Make and Install Programs from Source (xz)#####
+
+download linux source code 
+
+du -sh filename/
+
+tar -zcf gzip.tar.gz filename/
+
+
+time tar -zcf gzip.tar.gz filename/ = can use time to see 
+
+ls -lah
+
+
+time tar -Jcf xz.tar.xz filename/
+
+ls -lah
+
+####206.2 Backup Operations (Standard Tools - dd, tar and rsync)###
+
+dd = will backup entire device (liek ISO 
+
+df -h 
+
+dd if=/dev/xxxx of /dev/xxxx = backing file up partion to partion )
+
+dd if=/dev/xxx of=/mnt/myimage.img = just we ue as on cd dvd
+
+dd if=/dev/xxx of=/mnt/backup.img.iso
+
+tar cvzf (c=create, v=verbose, z= compress, f =file)
+
+tar cvzf  myfile.tar.gz /mnt/tar1orFilename to be backuiped up 
+
+see the file whitout umcomprss = tar tvcf myfile.tar.gz (t=
+
+tar xvgf mybackup.tar.gz  (x=uncmpress or extract) /newpath/
+
+rsync -avz (a= archive, verbose, z=write) /mnt/dir /mnt/dir2
+
+work with remote file 
+
+rsync -avz (z=transfer remote in compress mode) user@10.0.010:/home/userr/test/*.conf .
+
+once u run the commaned will run quickly casue the see for chnage in the file 
+
+vim adduser.conf
+
+rm adduser.conf
+
+
+### 206.3 Notify Users on System-Related Issues (Broadcast Messages with issue, wall and motd)##
+
+cat /etc/issue
+
+uname -r 
+
+uname -m
+
+vim /etc/issue  = login banner custome change
+
+add = Current Dat / Time: \d
+Versiob: \v
+
+Custome Message here 
+
+Logged In User Count: \U
+
+ssh user@remoteserver
+
+cat /etc/issue.net 
+
+vim /etc/ssh/sshd_confid 
+
+check the banner and uncomment 
+
+Banner /etc/issue.net 
+
+vim /etc/iisue.net 
+
+Greetig Dr. Afroz , will become dr.
+
+save the file.
+
+vim /etc/motd (Message of the day)
+
+Thers are the ruls of the sytem 
+
+1. do not login 
+2. any comment we can wshow
+
+save it 
+
+wall = broadcasting message to everting who logged in 
+
+which wall
+
+shudown +30 "shudown will occue in 30 min"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
