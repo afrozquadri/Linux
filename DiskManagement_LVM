@@ -1,0 +1,22 @@
+Disk management:- How to work with LVM 
+Assign the Physical drive and run the cmd to  create physical volume : pvcreate /dev/name_drive_latter
+verify : lvs (lvdisplay )
+Create volume group using the above physical volumes : vgcreate NAME_OF_VG /dev/name_drive_Letter
+verify : vgs (vgdisplay)
+create logical volume : lvcreate -L 50G NAME_OF_VOLUEMGROUP -n NAME_OF_LOGICALVOLUME
+verify : lvs (lvdisplay)
+Now format with with file system : mkfs.ext4 /dev/VOLUME_GROUP_NAME/VOLUME_NAME
+Now create a mount point : mkdir /mnt/NAME_OF_MOUNTPOINT
+Now add in fs tab to make permanent mount : vi /etc/fstab here make the entry for logical molume [/dev/NAME_VOLUME_GROUP /mnt/MOUNTPOINT_NAME ext4 defaults 0 0] 
+or [/dev/mapper/VG1-LV30 /mnt/LV30 ext4 defaults 0 0]
+Now mount it : mount -a [ if anything in the above config it will give error here]
+Q. How to extend the VOLUEM GROUP : Add new physical drive and run the cmd : vgextend NAME_VOLUEM_GROUP /dev/NEW_ADDED_DRIVE
+verify : vgs 
+Now extend the Logical volume : lvextend -L +5GB (by 5GB) /dev/VOLUEMGROUP/LOGICALVOLUME
+verify : lvs [will see the extend size run cmd : resize2fs /dev/mapper/NAME_VOLUME 
+Find the newly attached disk if not availble for post addintion, however in cloud it shows direclty.  
+rescan - echo "- - -" > /sys/class/scsi_host/host0/scan
+rescan - echo "- - -" > /sys/class/scsi_host/host1/scan
+
+LVM used in 99% company 
+
